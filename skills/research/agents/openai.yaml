@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research"
+  short_description: "Find out how things are, scaled to the questions, with every finding sourced and dated"
+  default_prompt: "Use $research to find out what the decisions ahead need to know: plan the questions, investigate them at their sources, and write an account with every finding sourced and dated."

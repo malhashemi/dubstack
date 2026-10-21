@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Home"
+  short_description: "Keep a living entry point for any project"
+  default_prompt: "Use $project-home to create or update this project’s living entry page, review it with me, and publish it once I’m happy with it."

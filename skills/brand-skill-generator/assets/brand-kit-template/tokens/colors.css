@@ -1,0 +1,9 @@
+/* REPLACE: Populate the accepted palette values and roles.
+   The initial values below are working defaults. */
+:root {
+  --background: #ffffff;
+  --foreground: #202020;
+  --primary: #404040;
+  --primary-foreground: #ffffff;
+  --border: #d0d0d0;
+}

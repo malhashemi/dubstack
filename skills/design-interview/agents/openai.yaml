@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design Interview"
+  short_description: "Explore and settle questions through visual rounds"
+  default_prompt: "Use $design-interview to run this interview in rounds: map what is open, render what is established and the current questions as one interactive page, and fold the answers back in each round."

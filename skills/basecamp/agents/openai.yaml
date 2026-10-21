@@ -1,0 +1,4 @@
+interface:
+  display_name: "Basecamp"
+  short_description: "Take in a goal of any size, route it, and keep its record and page"
+  default_prompt: "Use $basecamp to take in this goal: find what stands between it and working code, choose the next step, and hand it off."

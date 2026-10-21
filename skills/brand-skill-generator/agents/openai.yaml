@@ -1,0 +1,4 @@
+interface:
+  display_name: "Brand Skill Generator"
+  short_description: "Develop a brand with you and package it as a reusable brand skill"
+  default_prompt: "Use $brand-skill-generator to establish this brand's strategy, voice, and visual identity with me, then package it as a brand skill with its kit and overview page."

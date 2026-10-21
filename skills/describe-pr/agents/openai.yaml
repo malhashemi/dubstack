@@ -1,0 +1,4 @@
+interface:
+  display_name: "Describe PR"
+  short_description: "Create or update the PR with demos of user-facing changes and a walkthrough for larger changes"
+  default_prompt: "Use $describe-pr to create or update the pull request for this finished work, attach demos of what changes for users, and build a walkthrough page if the change is large."

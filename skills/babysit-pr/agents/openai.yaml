@@ -1,0 +1,4 @@
+interface:
+  display_name: "Babysit PR"
+  short_description: "Carry a pull request through CI and review to merge readiness"
+  default_prompt: "Use $babysit-pr to watch this pull request, fix failing checks and branch problems, resolve review feedback, and stop when CI is green and reviewers have cleared the current revision."

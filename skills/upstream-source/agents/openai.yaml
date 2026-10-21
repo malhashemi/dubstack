@@ -1,0 +1,4 @@
+interface:
+  display_name: "Upstream Source"
+  short_description: "Choose, set up, and update local upstream source references"
+  default_prompt: "Use $upstream-source to set up or update the specified upstream repository and install its revision record and project agent instructions."

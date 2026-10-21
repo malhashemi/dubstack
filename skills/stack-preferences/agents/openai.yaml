@@ -1,0 +1,4 @@
+interface:
+  display_name: "Stack Preferences"
+  short_description: "Look up, refresh, and change preferred technologies per category"
+  default_prompt: "Use $stack-preferences to look up my preferred technologies for this project's stack, refresh any stale entries, and record changes I agree to."

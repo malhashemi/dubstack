@@ -1,0 +1,4 @@
+interface:
+  display_name: "Implement Outline"
+  short_description: "Implement an approved outline end to end, verified and reviewed, up to the PR"
+  default_prompt: "Use $implement-outline to implement the approved structure outline for this work in one continuous run, verifying and reviewing it, and stop before opening the PR."

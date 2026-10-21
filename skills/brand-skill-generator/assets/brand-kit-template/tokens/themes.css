@@ -1,0 +1,3 @@
+/* REPLACE: Define explicit mode overrides if the brand needs them.
+   Match the accepted aliases in colors.css and keep this import after it.
+   For a single-theme brand, remove this file and its import if unnecessary. */

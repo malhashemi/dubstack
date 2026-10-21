@@ -1,0 +1,14 @@
+/* REPLACE: Choose or codify the actual type system. Adapt the roles below.
+   Licensed fonts in assets/ are reached from here with ../assets/<file>. */
+:root {
+  --font-body: system-ui, sans-serif;
+  --font-display: var(--font-body);
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 2rem;
+  --weight-regular: 400;
+  --weight-bold: 700;
+  --leading-body: 1.5;
+  --leading-heading: 1.2;
+}

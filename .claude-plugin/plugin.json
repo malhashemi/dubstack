@@ -1,0 +1,14 @@
+{
+  "name": "dubstack",
+  "displayName": "Dubstack",
+  "version": "0.1.0",
+  "description": "Agent skills for the whole development lifecycle: interviews that settle decisions with you on interactive pages, goals carried across stages, outlines, implementation, pull request review, and the project's shared knowledge.",
+  "author": {
+    "name": "M. Adel Alhashemi",
+    "url": "https://github.com/malhashemi"
+  },
+  "homepage": "https://github.com/malhashemi/dubstack",
+  "repository": "https://github.com/malhashemi/dubstack",
+  "license": "MIT",
+  "keywords": ["skills", "sdlc", "workflow", "interview", "planning", "implementation", "code-review", "dossier"]
+}

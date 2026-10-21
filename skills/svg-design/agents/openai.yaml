@@ -1,0 +1,4 @@
+interface:
+  display_name: "SVG Design"
+  short_description: "Design and refine logos, icons, and vector graphics as SVG code"
+  default_prompt: "Use $svg-design to create or refine this SVG, compare alternatives visually, and deliver clean, maintainable vector code."

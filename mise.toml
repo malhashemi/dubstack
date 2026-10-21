@@ -1,0 +1,11 @@
+[tools]
+python = "3.14.8"
+uv = "0.13.2"
+
+[env]
+# uv runs the check with the Python mise pins above, not one of its own.
+UV_PYTHON_PREFERENCE = "only-system"
+
+[tasks.check]
+description = "The full check: skill metadata, links, plugin manifests, preferences data, and tests"
+run = "uv run scripts/check.py"

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Architecture Review"
+  short_description: "Find architectural friction and candidates for deeper modules"
+  default_prompt: "Use $architecture-review to find where this codebase's modules and seams cause friction, show the candidates for deepening on a page in the project's tree, and hand the ones I take up to basecamp."

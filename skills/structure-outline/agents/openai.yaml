@@ -1,0 +1,4 @@
+interface:
+  display_name: "Structure Outline"
+  short_description: "Turn an approved design into a phased plan an agent can run end to end"
+  default_prompt: "Use $structure-outline to turn the approved design for this work into a phased outline with exact contracts, agent-run verification, owner setup up front, and a visual view for my review."

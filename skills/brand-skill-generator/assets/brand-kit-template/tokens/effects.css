@@ -1,0 +1,6 @@
+/* REPLACE: Define only the shape, elevation, and motion roles the brand uses. */
+:root {
+  --radius: 0.5rem;
+  --duration: 180ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+}

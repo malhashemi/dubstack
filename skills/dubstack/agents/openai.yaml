@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dubstack"
+  short_description: "Find where a project stands and which Dubstack skill to use next"
+  default_prompt: "Use $dubstack to look at where this project stands, tell me the next step and why, and explain any skill I ask about."

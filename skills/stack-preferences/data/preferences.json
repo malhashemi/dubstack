@@ -1,0 +1,2608 @@
+{
+  "schema": 1,
+  "updated": "2026-10-20",
+  "scope": "Standing preferences cover two languages, TypeScript and Rust. Rust gets the same categories as the TypeScript toolchain. Native and game options are limited to those built with TypeScript or Rust; Python, Go, Swift, Kotlin, C#, GDScript, and C++ toolchains are decided by the project that needs one.",
+  "layers": {
+    "shared": "Shared tooling",
+    "ts-toolchain": "TypeScript toolchain",
+    "web": "Web product stack",
+    "languages": "Rust, CLIs, and libraries",
+    "oneoff": "One-off apps",
+    "native": "Native desktop and mobile",
+    "games": "Games"
+  },
+  "out_of_scope": [
+    {
+      "what": "Categories only a product's requirements raise, such as a CMS, e-commerce, maps, rich-text editors, vector search, or model training",
+      "why": "no standing preference without a requirement; the architecture interview raises them when a project needs one"
+    },
+    {
+      "what": "Toolchains for Python, Go, Swift, Kotlin, C#, GDScript, C++, and other languages",
+      "why": "the user expects to build only in TypeScript and Rust; a project that needs another language decides its toolchain then"
+    },
+    {
+      "what": "Editor-led game engines (Godot, Unity, Unreal, Defold), code-first frameworks in C or Lua (raylib, LÖVE), native mobile and desktop UI in Swift, Kotlin, Dart, C#, or C++ (SwiftUI, Compose, Flutter, WinUI, Avalonia, Qt), and Photon's C# netcode",
+      "why": "their languages fall outside TypeScript and Rust; Godot's Rust bindings and Rust engines other than Bevy were not researched"
+    },
+    {
+      "what": "AI evaluations (Inspect AI, DeepEval, Ragas, Pydantic Evals), local model runtimes (Ollama, llama.cpp, MLX, vLLM), and AI SDKs and agent frameworks outside TypeScript (Python's, and Rust's Rig)",
+      "why": "the evaluation tools researched are Python-centred, and a local model runtime depends on the hardware and model a project picks; TypeScript AI is covered by `ai-sdk` and `ai-agents`"
+    }
+  ],
+  "categories": {
+    "source-hosting": {
+      "layer": "shared",
+      "title": "Source hosting and code review",
+      "decides": "where repositories, pull requests, issues, and reviews live",
+      "choices": [
+        {
+          "option": "GitHub"
+        }
+      ],
+      "why": "gh and GitHub's APIs are what agents and these skills drive (basecamp issues, babysit-pr)",
+      "override_when": "a client mandates its own forge",
+      "over": [
+        "GitLab: rewriting CI and the gh-based skill flows",
+        "Codeberg/Forgejo: small integration ecosystem",
+        "Bitbucket: Atlassian coupling"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "ci-provider": {
+      "layer": "shared",
+      "title": "CI provider",
+      "decides": "where pipelines are defined and scheduled",
+      "choices": [
+        {
+          "option": "GitHub Actions, with third-party actions pinned by commit SHA"
+        }
+      ],
+      "why": "follows the hosting choice; reviews and checks in one place",
+      "override_when": "pipelines outgrow Actions, such as heavy GPU work or device farms",
+      "over": [
+        "GitLab CI/CD: needs GitLab hosting",
+        "Buildkite: another service",
+        "CircleCI: separate billing and configuration"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "ci-runners": {
+      "layer": "shared",
+      "title": "CI runners",
+      "decides": "where CI jobs execute; usually decided by how heavy a project's builds are",
+      "choices": [
+        {
+          "option": "Blacksmith",
+          "when": "the repository belongs to a GitHub organisation"
+        },
+        {
+          "option": "GitHub-hosted standard",
+          "when": "the project is relatively small, or the repository is personal"
+        }
+      ],
+      "why": "user choice, no reason given; the organisation and personal conditions follow from Blacksmith's organisation-only support",
+      "override_when": "a project needs special hardware or a private network",
+      "over": [
+        "GitHub-hosted first: the interview's recommendation",
+        "larger runners: plan limits and price",
+        "Depot: organisation-only as well",
+        "self-hosted: patching and scaling"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "toolchain-pinning": {
+      "layer": "shared",
+      "title": "Toolchain and version pinning",
+      "decides": "how a project pins its language runtimes and tools so people, CI, and agents use the same versions",
+      "choices": [
+        {
+          "option": "mise"
+        },
+        {
+          "option": "the ecosystem's own pin"
+        }
+      ],
+      "why": "user choice, no reason given; mise has to be installed in CI and for agents",
+      "override_when": "a host or build image reads only the ecosystem's own pin, such as `.node-version`; keep that pin in step with mise",
+      "over": [
+        "the ecosystem's own pin first: the interview's recommendation",
+        "proto and (d) asdf: pre-1.0",
+        "Nix and (f) devenv/Devbox: Nix's learning curve"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "task-runner": {
+      "layer": "shared",
+      "title": "Task runner",
+      "decides": "where a project's commands, such as check, build, and dev, are defined",
+      "choices": [
+        {
+          "option": "mise tasks"
+        },
+        {
+          "option": "just"
+        },
+        {
+          "option": "the ecosystem's own scripts"
+        }
+      ],
+      "why": "user choice, no reason given; follows `toolchain-pinning`, with mise owning tools and tasks",
+      "override_when": "a project does not use mise; its justfile or manifest scripts then hold the commands",
+      "over": [
+        "the ecosystem's own scripts first: the interview's recommendation",
+        "Make: syntax and portability",
+        "Taskfile: another binary"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "git-hooks": {
+      "layer": "shared",
+      "title": "Git hooks",
+      "decides": "local checks on commit or push; CI remains the real gate either way",
+      "choices": [
+        {
+          "option": "None"
+        },
+        {
+          "option": "Lefthook",
+          "when": "a project wants local gates, such as several humans committing"
+        }
+      ],
+      "avoid": [
+        "Husky"
+      ],
+      "why": "agents commit often; hooks slow every commit or get bypassed, and the full check already runs before handoff",
+      "override_when": "several humans commit and want local feedback",
+      "over": [
+        "prek: pre-1.0",
+        "pre-commit: Python bootstrap",
+        "Husky: Node-only, last release November 2024"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "agent-hooks": {
+      "layer": "shared",
+      "title": "Agent hooks",
+      "decides": "harness hooks around agent actions; each harness (Claude Code, Codex, OpenCode, Grok) needs its own",
+      "choices": [
+        {
+          "option": "None"
+        }
+      ],
+      "why": "skills such as implement-outline already run the full check before finishing, and every harness would need its own hook",
+      "override_when": "agents often hand back unformatted or failing code; then a stop hook that runs format and lint",
+      "over": [
+        "stop hook: one setup per harness",
+        "tool-call gates: slow agents"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "secret-scanning": {
+      "layer": "shared",
+      "title": "Secret scanning",
+      "decides": "catching leaked credentials before and after a push; server-side and CI scanning combine",
+      "choices": [
+        {
+          "option": "Betterleaks"
+        },
+        {
+          "option": "GitHub push protection"
+        }
+      ],
+      "why": "user choice of order, no reason given; both run together as recommended",
+      "override_when": "push protection is unavailable on a private repository's plan; Betterleaks then runs alone",
+      "over": [
+        "Gitleaks: security patches only",
+        "TruffleHog: AGPL, contacts services",
+        "ggshield: a service dependency"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "dependency-updates": {
+      "layer": "shared",
+      "title": "Dependency updates",
+      "decides": "automated pull requests that keep dependencies current; a planned dependency-update skill will also cover upstream-source references",
+      "choices": [
+        {
+          "option": "Renovate"
+        },
+        {
+          "option": "Dependabot",
+          "when": "a single small package"
+        }
+      ],
+      "why": "grouped, scheduled update PRs suit review by agents and people",
+      "override_when": "a repository only needs GitHub Actions updates",
+      "over": [
+        "Updatecli: more authoring, pre-1.0"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "vulnerability-scanning": {
+      "layer": "shared",
+      "title": "Vulnerability scanning",
+      "decides": "detecting known-vulnerable dependencies; separate from update bots",
+      "choices": [
+        {
+          "option": "GitHub dependency review",
+          "when": "on pull requests"
+        },
+        {
+          "option": "OSV-Scanner",
+          "when": "on a schedule, for what is merged"
+        },
+        {
+          "option": "Trivy",
+          "when": "a project ships containers"
+        }
+      ],
+      "why": "one gate at review plus one sweep across ecosystems",
+      "override_when": "the plan lacks dependency review on a private repository; OSV-Scanner then also runs on pull requests",
+      "over": [
+        "package-manager audit: one tool per ecosystem"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "local-container-runtime": {
+      "layer": "shared",
+      "title": "Local container runtime",
+      "decides": "what projects may assume is installed to run local services",
+      "choices": [
+        {
+          "option": "No containers where avoidable"
+        },
+        {
+          "option": "Docker Desktop"
+        }
+      ],
+      "why": "no daemon first, as recommended; Docker Desktop second is user choice, no reason given",
+      "override_when": "a client's environment requires another runtime",
+      "over": [
+        "OrbStack: the interview's recommendation if licensed",
+        "Colima: more setup",
+        "Podman: compatibility gaps"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "local-services": {
+      "layer": "shared",
+      "title": "Local services",
+      "decides": "how one command starts the whole system locally",
+      "choices": [
+        {
+          "option": "Embedded stores plus the dev task"
+        },
+        {
+          "option": "Docker Compose",
+          "when": "a store has no embedded form"
+        }
+      ],
+      "why": "one command with no container daemon keeps local runs and checks fast for people and agents",
+      "override_when": "a service exists only as a container image",
+      "over": [
+        "process-compose",
+        "dekit",
+        "Overmind: another tool beside the dev task"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "devcontainer": {
+      "layer": "shared",
+      "title": "Devcontainer recipe",
+      "decides": "whether projects ship a repository-defined development container",
+      "choices": [
+        {
+          "option": "When a project needs it"
+        }
+      ],
+      "why": "a container earns its upkeep only when native setup is hard",
+      "override_when": "a team needs one identical environment for everyone; then every project ships one",
+      "over": [
+        "never: environments drift",
+        "always: maintenance and mount hazards"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "commits-and-branches": {
+      "layer": "shared",
+      "title": "Commits and branches",
+      "decides": "branch lifetime, merge style, and commit messages",
+      "choices": [
+        {
+          "option": "Short-lived branches, squash merge, conventional PR title"
+        }
+      ],
+      "why": "agent-made branches stay cheap while main stays semantic for release tooling",
+      "override_when": "a project's release tooling needs every commit to be conventional",
+      "over": [
+        "keep conventional commits: hygiene on every branch",
+        "trunk-based: release tooling cannot parse history"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "release": {
+      "layer": "shared",
+      "title": "Release and versioning",
+      "decides": "how a project versions and publishes releases, which differs per project",
+      "per_project": true,
+      "choices": [
+        {
+          "option": "release-please"
+        },
+        {
+          "option": "Changesets"
+        }
+      ],
+      "decided_by": "what the project distributes and to whom",
+      "why": "release differs per project",
+      "over": [
+        "semantic-release: little manual approval",
+        "dist/GoReleaser: native binaries, revisited with Rust",
+        "custom pipeline: yours to maintain"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "agent-isolation": {
+      "layer": "shared",
+      "title": "Agent isolation",
+      "decides": "keeping concurrent agents' work apart",
+      "choices": [
+        {
+          "option": "Git worktrees plus harness permissions"
+        },
+        {
+          "option": "Docker Sandboxes",
+          "when": "the code is untrusted"
+        }
+      ],
+      "why": "T3 already gives each agent its own worktree; a sandbox only when the code itself is untrusted",
+      "override_when": "agents must run code from untrusted sources",
+      "over": [
+        "devcontainer with scoped mounts: only as tight as its mounts"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "dev-secrets": {
+      "layer": "shared",
+      "title": "Development secrets",
+      "decides": "how secrets reach local runs and CI without plaintext in the repository",
+      "choices": [
+        {
+          "option": "Bitwarden Secrets Manager"
+        },
+        {
+          "option": "Gitignored .env plus CI secrets",
+          "when": "a throwaway project, or the free plan's projects run out"
+        }
+      ],
+      "why": "no plaintext on disk and no keys to manage, and per-project machine accounts keep an agent's token to one project's secrets",
+      "override_when": "a client or team keeps its secrets in another manager",
+      "over": [
+        "1Password: a second password manager",
+        "SOPS + age: key management",
+        "Infisical: a service, pre-1.0",
+        "Bitwarden CLI: an unlocked session exposes the whole vault"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "js-runtime": {
+      "layer": "ts-toolchain",
+      "title": "JavaScript runtime",
+      "decides": "where TypeScript runs in production and for tools",
+      "choices": [
+        {
+          "option": "Node.js",
+          "when": "servers and long-lived services"
+        },
+        {
+          "option": "Bun",
+          "when": "CLIs, local tools, and scripts"
+        },
+        {
+          "option": "Cloudflare Workers",
+          "when": "the host is Cloudflare"
+        }
+      ],
+      "why": "LTS and compatibility for production; Bun's startup and single-file binaries for tools",
+      "override_when": "a host or framework requires another runtime",
+      "over": [
+        "Deno: different conventions"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "package-manager": {
+      "layer": "ts-toolchain",
+      "title": "Package manager",
+      "decides": "installing dependencies, linking workspaces, lockfiles",
+      "choices": [
+        {
+          "option": "pnpm"
+        },
+        {
+          "option": "Bun",
+          "when": "Bun is also the runtime"
+        }
+      ],
+      "avoid": [
+        "Yarn Classic"
+      ],
+      "why": "pnpm's strict layout catches undeclared imports agents add",
+      "override_when": "a host or framework requires another manager",
+      "over": [
+        "npm: phantom dependencies",
+        "Yarn Modern: PnP decision"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "monorepo": {
+      "layer": "ts-toolchain",
+      "title": "Monorepo orchestration",
+      "decides": "task ordering and caching across workspace packages",
+      "choices": [
+        {
+          "option": "Turborepo"
+        },
+        {
+          "option": "Bun workspaces",
+          "when": "using Bun"
+        }
+      ],
+      "why": "user choice, no reason given; Turborepo first at any size",
+      "override_when": "a repository has a single package",
+      "over": [
+        "plain workspaces for two or three packages: the interview's recommendation's second, kept here only under Bun",
+        "Nx: more conventions",
+        "moon: another ecosystem"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "formatter": {
+      "layer": "ts-toolchain",
+      "title": "Formatter",
+      "decides": "mechanical formatting for code and common file types",
+      "choices": [
+        {
+          "option": "oxfmt"
+        },
+        {
+          "option": "`bun fmt`",
+          "when": "using Bun"
+        }
+      ],
+      "why": "user choice for the second, no reason given; oxfmt first as recommended",
+      "override_when": "until `bun fmt` is in a stable release, Bun projects keep oxfmt",
+      "over": [
+        "Biome: the interview's recommendation's second",
+        "Prettier: slower",
+        "dprint: plugin management"
+      ],
+      "revisit_when": [
+        "`bun fmt` ships in a stable Bun release"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "linter": {
+      "layer": "ts-toolchain",
+      "title": "Linter and rule policy",
+      "decides": "static rules, type-aware checks, and custom policy",
+      "choices": [
+        {
+          "option": "Type-aware Oxlint with anti-slop"
+        },
+        {
+          "option": "`bun lint` with anti-slop",
+          "when": "using Bun"
+        }
+      ],
+      "why": "fast type-aware feedback on agent-typical mistakes; the Bun choice is user choice, no reason given",
+      "override_when": "until `bun lint` is in a stable release and runs anti-slop's rules, Bun projects keep Oxlint",
+      "over": [
+        "Biome: the interview's recommendation's second",
+        "ESLint: no TypeScript 7 support",
+        "deno lint: Deno-centred"
+      ],
+      "revisit_when": [
+        "`bun lint` ships in a stable Bun release and runs anti-slop's rules"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "type-checker": {
+      "layer": "ts-toolchain",
+      "title": "Type checker",
+      "decides": "the authoritative compiler check",
+      "choices": [
+        {
+          "option": "TypeScript 7 `tsc`"
+        },
+        {
+          "option": "vue-tsc",
+          "when": "the framework is Vue"
+        },
+        {
+          "option": "svelte-check",
+          "when": "the framework is Svelte"
+        }
+      ],
+      "why": "the native compiler is stable and much faster; framework checkers only where components need them",
+      "override_when": "a tool the project needs depends on the pre-7 compiler API",
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "strictness": {
+      "layer": "ts-toolchain",
+      "title": "TypeScript strictness",
+      "decides": "which compile-time checks every project promises",
+      "choices": [
+        {
+          "option": "`strict` plus `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitOverride`, `noImplicitReturns`, `noFallthroughCasesInSwitch`, and `noPropertyAccessFromIndexSignature`; unused code left to the linter and analyzer"
+        }
+      ],
+      "why": "the compiler catches silent mistakes before review",
+      "override_when": "generated code or a library's types make a flag impractical; relax it for those files only, with the reason beside the setting",
+      "over": [
+        "strict only",
+        "strict plus precise access: fewer checks"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "code-hygiene": {
+      "layer": "ts-toolchain",
+      "title": "Code hygiene, duplication, and complexity",
+      "decides": "repository-wide unused code, unused dependencies, clones, and complexity",
+      "choices": [
+        {
+          "option": "fallow, blocking in the full check"
+        }
+      ],
+      "why": "one tool covers every hygiene scope, and blocking keeps it from turning advisory",
+      "override_when": "a project fallow cannot analyse, such as one built mainly in another language",
+      "over": [
+        "Knip",
+        "jscpd",
+        "Sherif: one scope each"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "architecture-boundaries": {
+      "layer": "ts-toolchain",
+      "title": "Architecture boundaries",
+      "decides": "enforcing which packages and layers may import which",
+      "choices": [
+        {
+          "option": "fallow boundaries"
+        },
+        {
+          "option": "dependency-cruiser"
+        },
+        {
+          "option": "Turborepo boundaries"
+        }
+      ],
+      "why": "fallow first as recommended, adding no tool; the later order is user choice, no reason given",
+      "override_when": "rules exceed what fallow expresses",
+      "over": [
+        "eslint-plugin-boundaries: needs ESLint",
+        "Nx boundaries: needs Nx"
+      ],
+      "revisit_when": [
+        "Turborepo's boundaries feature leaves experimental"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "unit-tests": {
+      "layer": "ts-toolchain",
+      "title": "Unit and integration test runner",
+      "decides": "local test execution, isolation, and coverage",
+      "choices": [
+        {
+          "option": "Vitest"
+        },
+        {
+          "option": "bun:test",
+          "when": "packages that run only on Bun"
+        }
+      ],
+      "why": "the same tests run on Node, in a real browser, and in the Workers pool, and Effect's test helpers need Vitest",
+      "override_when": "a package runs only on Bun",
+      "over": [
+        "node:test: thinner ergonomics",
+        "Deno.test: Deno-only",
+        "Jest: heavier configuration"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "browser-tests": {
+      "layer": "ts-toolchain",
+      "title": "End-to-end and browser testing",
+      "decides": "real-browser product journeys and browser component checks",
+      "choices": [
+        {
+          "option": "Playwright Test",
+          "when": "product journeys"
+        },
+        {
+          "option": "Vitest Browser Mode",
+          "when": "components"
+        }
+      ],
+      "why": "Playwright is what agents and computer-use tooling already drive",
+      "override_when": "a product runs outside a browser",
+      "over": [
+        "Cypress",
+        "WebdriverIO",
+        "Puppeteer"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "app-build": {
+      "layer": "ts-toolchain",
+      "title": "Application build",
+      "decides": "dev server and production bundles, unless a meta-framework owns them",
+      "choices": [
+        {
+          "option": "Vite",
+          "when": "the meta-framework does not own the build"
+        },
+        {
+          "option": "Bun bundler"
+        }
+      ],
+      "why": "every framework preferred here builds on Vite; Bun's bundler second is user choice, no reason given",
+      "override_when": "the meta-framework owns the build",
+      "over": [
+        "Rsbuild/Rspack",
+        "webpack",
+        "Parcel"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "library-build": {
+      "layer": "ts-toolchain",
+      "title": "Library build",
+      "decides": "building packages others import: formats, declarations, exports",
+      "choices": [
+        {
+          "option": "`tsc` emit",
+          "when": "unbundled ESM packages"
+        },
+        {
+          "option": "tsdown",
+          "when": "bundling or dual formats are needed"
+        }
+      ],
+      "avoid": [
+        "tsup"
+      ],
+      "why": "most packages need only compiled ESM and declarations",
+      "override_when": "a package must ship CommonJS or bundled assets",
+      "over": [
+        "unbuild",
+        "Rollup",
+        "esbuild"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "effect": {
+      "layer": "ts-toolchain",
+      "title": "Effect or plain TypeScript",
+      "decides": "how code handles errors, concurrency, dependencies, and resources",
+      "choices": [
+        {
+          "option": "Effect"
+        }
+      ],
+      "why": "user choice, no reason given",
+      "override_when": "a library whose consumers must not take on Effect, or code where breaking changes in Effect's unstable modules are unacceptable",
+      "over": [
+        "plain TypeScript for UI code, small tools, and libraries others consume: the interview's recommendation's second",
+        "neverthrow: errors only",
+        "fp-ts: Effect is its successor"
+      ],
+      "revisit_when": [
+        "Effect declares its unstable modules stable: schema, http, http-api, ai, sql, workflow, cli"
+      ],
+      "decided": "2026-10-19",
+      "checked": "2026-10-19"
+    },
+    "frontend-framework": {
+      "layer": "web",
+      "title": "Frontend framework",
+      "decides": "the UI component and rendering model for web products",
+      "choices": [
+        {
+          "option": "React"
+        },
+        {
+          "option": "Svelte"
+        }
+      ],
+      "why": "agents are most fluent in React, and the libraries chosen here target it first; Svelte second is user choice, no reason given",
+      "override_when": "a project's ecosystem or team is built on another framework",
+      "over": [
+        "Vue",
+        "Solid",
+        "Angular"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "meta-framework": {
+      "layer": "web",
+      "title": "Meta-framework",
+      "decides": "routing, rendering, and server integration around the UI framework",
+      "choices": [
+        {
+          "option": "TanStack Start"
+        },
+        {
+          "option": "React Router framework mode"
+        },
+        {
+          "option": "SvelteKit"
+        },
+        {
+          "option": "Astro"
+        },
+        {
+          "option": "Vite SPA with TanStack Router"
+        },
+        {
+          "option": "Next.js"
+        }
+      ],
+      "why": "TanStack Start first as recommended (Vite build, typed end to end, Node or Workers hosting); the rest of the order is user choice, no reason given",
+      "override_when": "a project's shape favours a lighter option, such as a content site (Astro) or a static internal tool behind an API (Vite SPA); SvelteKit applies only with Svelte",
+      "over": [
+        "Nuxt: Vue"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "styling": {
+      "layer": "web",
+      "title": "Styling",
+      "decides": "how CSS is written",
+      "choices": [
+        {
+          "option": "StyleX"
+        },
+        {
+          "option": "Tailwind CSS"
+        }
+      ],
+      "why": "user choice, no reason given; StyleX is what Astryx (`ui-components`) is authored in",
+      "override_when": "a component library or template the project adopts assumes Tailwind",
+      "over": [
+        "Tailwind first: the interview's recommendation",
+        "CSS Modules",
+        "vanilla-extract",
+        "Panda CSS",
+        "UnoCSS"
+      ],
+      "revisit_when": [
+        "StyleX reaches 1.0"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "ui-components": {
+      "layer": "web",
+      "title": "UI components",
+      "decides": "which components a project owns, themes, or consumes",
+      "choices": [
+        {
+          "option": "Astryx"
+        },
+        {
+          "option": "shadcn/ui"
+        },
+        {
+          "option": "Base UI",
+          "when": "a brand needs its own component system built from primitives"
+        }
+      ],
+      "why": "user choice, no reason given; Astryx themes through CSS custom properties, so a brand kit's tokens can drive it",
+      "override_when": "a project cannot take on a design system in beta, or does not run React 19",
+      "over": [
+        "shadcn/ui first: the interview's recommendation",
+        "React Aria Components",
+        "Material UI"
+      ],
+      "revisit_when": [
+        "Astryx leaves beta"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "server-state": {
+      "layer": "web",
+      "title": "Server state",
+      "decides": "loading, caching, and invalidating remote data in the client",
+      "choices": [
+        {
+          "option": "TanStack Query, with router loaders prefetching into it"
+        }
+      ],
+      "why": "the caching, invalidation, and mutations an interactive app needs, without request waterfalls",
+      "override_when": "data loads only on navigation and never refetches",
+      "over": [
+        "SWR",
+        "RTK Query",
+        "Apollo Client",
+        "loaders only"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "client-state": {
+      "layer": "web",
+      "title": "Client state",
+      "decides": "interaction state that is not server data",
+      "choices": [
+        {
+          "option": "Framework-local and URL state"
+        },
+        {
+          "option": "Zustand",
+          "when": "state is shared across distant components"
+        },
+        {
+          "option": "XState",
+          "when": "a flow has many states"
+        },
+        {
+          "option": "Effect Atom"
+        }
+      ],
+      "why": "most state belongs in components or the URL; Effect Atom fourth is user choice, no reason given",
+      "override_when": "a framework other than React, where its own reactivity applies",
+      "over": [
+        "Jotai",
+        "Redux Toolkit"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "runtime-schemas": {
+      "layer": "web",
+      "title": "Runtime schemas",
+      "decides": "validating untrusted input and deriving types from it",
+      "choices": [
+        {
+          "option": "Effect Schema",
+          "when": "Effect code"
+        },
+        {
+          "option": "Zod",
+          "when": "a library requires it"
+        }
+      ],
+      "why": "follows `effect`: one schema system across Effect code, its HTTP API, and RPC",
+      "override_when": "a breaking change in Effect's unstable `schema` module is unacceptable for the project",
+      "over": [
+        "Valibot",
+        "ArkType",
+        "TypeBox"
+      ],
+      "revisit_when": [
+        "Effect declares its `schema` module stable"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "forms": {
+      "layer": "web",
+      "title": "Forms",
+      "decides": "field state, validation, and submission",
+      "choices": [
+        {
+          "option": "TanStack Form",
+          "when": "interactive forms"
+        },
+        {
+          "option": "Native forms with framework actions",
+          "when": "simple server-handled forms"
+        }
+      ],
+      "why": "typed fields validated with the same schemas as the server",
+      "override_when": "a framework other than React, with its own form tooling",
+      "over": [
+        "React Hook Form"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "api-style": {
+      "layer": "web",
+      "title": "API style",
+      "decides": "the contract between clients and the server",
+      "choices": [
+        {
+          "option": "Server functions",
+          "when": "one full-stack app is the only client"
+        },
+        {
+          "option": "Effect HttpApi",
+          "when": "a CLI, mobile app, other service, or the public calls the API"
+        },
+        {
+          "option": "tRPC"
+        }
+      ],
+      "why": "follows `effect`; tRPC third is user choice, no reason given",
+      "override_when": "a codebase built without Effect, where tRPC fits",
+      "over": [
+        "oRPC",
+        "hand-written OpenAPI",
+        "GraphQL"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "backend-framework": {
+      "layer": "web",
+      "title": "Backend framework",
+      "decides": "the HTTP server for services outside the meta-framework",
+      "choices": [
+        {
+          "option": "The meta-framework's server",
+          "when": "the app's own server covers the product"
+        },
+        {
+          "option": "Effect HTTP platform",
+          "when": "a standalone service"
+        },
+        {
+          "option": "Hono"
+        },
+        {
+          "option": "NestJS"
+        },
+        {
+          "option": "Fastify"
+        }
+      ],
+      "why": "no second server until something needs one, and Effect when it does; the later order is user choice, no reason given",
+      "override_when": "a service built without Effect",
+      "over": [
+        "Elysia",
+        "Express"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "primary-database": {
+      "layer": "web",
+      "title": "Primary database",
+      "decides": "the system of record",
+      "choices": [
+        {
+          "option": "PostgreSQL",
+          "when": "a multi-user product"
+        },
+        {
+          "option": "SQLite",
+          "when": "local-first, single-host, self-hosted, or on Cloudflare"
+        },
+        {
+          "option": "Convex"
+        }
+      ],
+      "why": "Postgres serves multi-user products on any host, and SQLite removes the server where one writer is enough; Convex third is user choice, no reason given",
+      "override_when": "a product built around reactive sync, where Convex's platform fits first",
+      "over": [
+        "MySQL",
+        "MongoDB"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "orm": {
+      "layer": "web",
+      "title": "ORM and migrations",
+      "decides": "database access and schema changes",
+      "choices": [
+        {
+          "option": "Drizzle ORM and Kit"
+        },
+        {
+          "option": "Effect SQL"
+        }
+      ],
+      "why": "typed, SQL-shaped queries and migrations across Postgres, SQLite, and D1; Effect SQL second is user choice, no reason given",
+      "override_when": "Effect's `sql` module becomes stable in an Effect-first codebase",
+      "over": [
+        "Prisma",
+        "Kysely",
+        "MikroORM",
+        "driver with SQL migrations"
+      ],
+      "revisit_when": [
+        "Effect declares its `sql` module stable"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "caching": {
+      "layer": "web",
+      "title": "Caching and shared state",
+      "decides": "cross-process caches, rate limits, and short-lived shared state",
+      "choices": [
+        {
+          "option": "None until needed"
+        },
+        {
+          "option": "Platform storage",
+          "when": "the host is Cloudflare"
+        },
+        {
+          "option": "Valkey",
+          "when": "shared state is needed elsewhere"
+        }
+      ],
+      "why": "most apps need no shared cache; the platform's own storage before running a server",
+      "override_when": "several instances must share state from the start",
+      "over": [
+        "Redis",
+        "Dragonfly"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "auth": {
+      "layer": "web",
+      "title": "Authentication",
+      "decides": "sign-in, sessions, and organisations",
+      "choices": [
+        {
+          "option": "Better Auth"
+        },
+        {
+          "option": "WorkOS AuthKit",
+          "when": "enterprise SSO or directory sync is a requirement"
+        },
+        {
+          "option": "Clerk"
+        }
+      ],
+      "avoid": [
+        "Auth.js"
+      ],
+      "why": "users and sessions stay in the project's database; Clerk third is user choice, no reason given",
+      "override_when": "enterprise SSO or directory sync is required from the start",
+      "over": [
+        "Auth0",
+        "Supabase Auth"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "payments": {
+      "layer": "web",
+      "title": "Payments",
+      "decides": "taking money, and who is the merchant of record",
+      "choices": [
+        {
+          "option": "Polar"
+        },
+        {
+          "option": "Stripe"
+        }
+      ],
+      "why": "user choice, no reason given; as merchant of record Polar takes on international sales tax and needs only Stripe Connect Express payouts in the merchant's country",
+      "override_when": "the merchant's country is not on Polar's payout list (Iraq is not), or the product is not eligible for a merchant of record",
+      "over": [
+        "Stripe first: the interview's recommendation, speculative",
+        "Paddle",
+        "Lemon Squeezy",
+        "Adyen"
+      ],
+      "revisit_when": [
+        "Polar's payout countries change"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "email": {
+      "layer": "web",
+      "title": "Transactional email",
+      "decides": "sending application email",
+      "choices": [
+        {
+          "option": "Resend"
+        },
+        {
+          "option": "Amazon SES",
+          "when": "high volume"
+        }
+      ],
+      "why": "a TypeScript-first API with templates written as React components",
+      "override_when": "the client already sends through another provider",
+      "over": [
+        "Postmark",
+        "SendGrid",
+        "Mailgun"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "background-jobs": {
+      "layer": "web",
+      "title": "Background jobs and workflows",
+      "decides": "deferred work, retries, schedules, and durable execution",
+      "choices": [
+        {
+          "option": "Cloudflare Workflows and Queues",
+          "when": "the host is Cloudflare"
+        },
+        {
+          "option": "Trigger.dev",
+          "when": "elsewhere"
+        },
+        {
+          "option": "Effect workflow"
+        },
+        {
+          "option": "Temporal"
+        }
+      ],
+      "why": "durable work runs on the platform already hosting the app; the later order is user choice, no reason given",
+      "override_when": "a business process needs Temporal-grade durability across services",
+      "over": [
+        "Inngest",
+        "BullMQ"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "realtime": {
+      "layer": "web",
+      "title": "Realtime",
+      "decides": "live updates, presence, and collaboration",
+      "choices": [
+        {
+          "option": "Server-sent events",
+          "when": "one-way updates"
+        },
+        {
+          "option": "Durable Objects with PartyServer",
+          "when": "rooms, presence, or shared state"
+        },
+        {
+          "option": "Liveblocks",
+          "when": "collaborative editing"
+        }
+      ],
+      "avoid": [
+        "hosted PartyKit"
+      ],
+      "why": "most live updates are one-way; rooms on the project's own Cloudflare account before a service",
+      "override_when": "the host is not Cloudflare and rooms are needed",
+      "over": [
+        "Ably",
+        "Supabase Realtime"
+      ],
+      "revisit_when": [
+        "PartyServer reaches 1.0"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "file-storage": {
+      "layer": "web",
+      "title": "File storage",
+      "decides": "uploads and binary objects",
+      "choices": [
+        {
+          "option": "Cloudflare R2"
+        },
+        {
+          "option": "Amazon S3",
+          "when": "the project is on AWS"
+        }
+      ],
+      "why": "S3-compatible storage bound directly to Workers",
+      "override_when": "the project is hosted on AWS",
+      "over": [
+        "Vercel Blob",
+        "UploadThing"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "search": {
+      "layer": "web",
+      "title": "Search",
+      "decides": "keyword search and filtering",
+      "choices": [
+        {
+          "option": "The database's own full-text search"
+        },
+        {
+          "option": "Meilisearch",
+          "when": "relevance outgrows the database"
+        }
+      ],
+      "why": "no second system to keep in sync",
+      "override_when": "search is the product's core feature",
+      "over": [
+        "Typesense",
+        "Algolia"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "frontend-hosting": {
+      "layer": "web",
+      "title": "Frontend hosting",
+      "decides": "where web apps and sites are served",
+      "choices": [
+        {
+          "option": "Cloudflare Workers with static assets"
+        },
+        {
+          "option": "Vercel",
+          "when": "a Next.js app needs features Cloudflare's adapter lacks"
+        }
+      ],
+      "why": "one platform for apps, storage, queues, and databases",
+      "override_when": "a client mandates another host",
+      "over": [
+        "Netlify"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "backend-hosting": {
+      "layer": "web",
+      "title": "Backend hosting",
+      "decides": "where services and long-lived processes run",
+      "choices": [
+        {
+          "option": "Cloudflare Workers"
+        },
+        {
+          "option": "Self-hosted server"
+        },
+        {
+          "option": "Railway"
+        },
+        {
+          "option": "Fly.io"
+        }
+      ],
+      "why": "Workers first as recommended; the rest of the order is user choice, no reason given",
+      "override_when": "a service needs long-lived processes or native binaries, which Workers rule out; the next choice applies",
+      "over": [
+        "Fly.io second: the interview's recommendation",
+        "Render"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "database-hosting": {
+      "layer": "web",
+      "title": "Database hosting",
+      "decides": "who operates the database",
+      "choices": [
+        {
+          "option": "Neon",
+          "when": "Postgres"
+        },
+        {
+          "option": "Cloudflare D1",
+          "when": "SQLite on Cloudflare"
+        },
+        {
+          "option": "PlanetScale"
+        },
+        {
+          "option": "Turso Cloud"
+        }
+      ],
+      "why": "a database branch per preview for Postgres, and D1 bound directly to Workers",
+      "override_when": "data residency requires a region the host does not offer",
+      "over": [
+        "Supabase",
+        "self-hosted Postgres"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "infrastructure-as-code": {
+      "layer": "web",
+      "title": "Infrastructure as code",
+      "decides": "how cloud resources are declared",
+      "choices": [
+        {
+          "option": "Alchemy"
+        },
+        {
+          "option": "SST"
+        },
+        {
+          "option": "Platform configuration only"
+        }
+      ],
+      "why": "user choice, no reason given; Alchemy is TypeScript on Effect (`effect`)",
+      "override_when": "a project needs a stable release (Alchemy's latest is a beta)",
+      "over": [
+        "platform configuration first: the interview's recommendation",
+        "Pulumi",
+        "OpenTofu"
+      ],
+      "revisit_when": [
+        "Alchemy 2 leaves beta"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "observability": {
+      "layer": "web",
+      "title": "Observability",
+      "decides": "errors, traces, and logs in production",
+      "choices": [
+        {
+          "option": "Sentry"
+        },
+        {
+          "option": "OpenTelemetry with a backend"
+        },
+        {
+          "option": "Platform logs with structured logging",
+          "when": "logs"
+        }
+      ],
+      "why": "Sentry groups errors and traces with source maps in minutes",
+      "override_when": "a client requires its own telemetry platform",
+      "over": [
+        "Axiom",
+        "Better Stack"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "product-analytics": {
+      "layer": "web",
+      "title": "Product analytics",
+      "decides": "product events, funnels, and traffic",
+      "choices": [
+        {
+          "option": "PostHog",
+          "when": "a product"
+        },
+        {
+          "option": "Plausible",
+          "when": "a marketing or content site"
+        },
+        {
+          "option": "Google Analytics 4"
+        },
+        {
+          "option": "Umami"
+        }
+      ],
+      "why": "events, funnels, replays, and flags in one tool for products",
+      "override_when": "a client's marketing team requires its own analytics",
+      "over": [
+        "first-party analytics"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "feature-flags": {
+      "layer": "web",
+      "title": "Feature flags",
+      "decides": "rollouts, kill switches, and experiments",
+      "choices": [
+        {
+          "option": "None until needed"
+        },
+        {
+          "option": "PostHog flags",
+          "when": "a rollout or experiment needs targeting"
+        }
+      ],
+      "why": "flags are worth a service only once targeting is needed",
+      "override_when": "a product runs experiments from launch",
+      "over": [
+        "GrowthBook",
+        "Statsig",
+        "WorkOS flags"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "i18n": {
+      "layer": "web",
+      "title": "Internationalisation",
+      "decides": "translated messages and locale formatting",
+      "choices": [
+        {
+          "option": "Paraglide JS"
+        },
+        {
+          "option": "i18next"
+        }
+      ],
+      "why": "typed message keys catch missing translations at compile time",
+      "override_when": "a framework or translation workflow requires another library",
+      "over": [
+        "Lingui",
+        "FormatJS"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "ai-sdk": {
+      "layer": "web",
+      "title": "AI SDK",
+      "decides": "model calls, streaming, tools, and structured output",
+      "choices": [
+        {
+          "option": "Vercel AI SDK"
+        },
+        {
+          "option": "Anthropic SDK",
+          "when": "a provider-specific feature matters"
+        },
+        {
+          "option": "OpenAI SDK",
+          "when": "a provider-specific feature matters"
+        },
+        {
+          "option": "Effect AI"
+        }
+      ],
+      "why": "stable across providers, where Effect AI is still unstable",
+      "override_when": "Effect's `ai` module becomes stable in an Effect-first codebase",
+      "revisit_when": [
+        "Effect declares its `ai` module stable"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "ai-agents": {
+      "layer": "web",
+      "title": "AI agents",
+      "decides": "agent loops, tools, and handoffs inside a product",
+      "choices": [
+        {
+          "option": "AI SDK agents"
+        },
+        {
+          "option": "Pi SDK"
+        },
+        {
+          "option": "Mastra"
+        },
+        {
+          "option": "Claude Agent SDK"
+        },
+        {
+          "option": "OpenAI Agents SDK"
+        }
+      ],
+      "why": "an in-app agent runs in the same SDK as its model calls; the later order is user choice, no reason given",
+      "override_when": "the agent works on files, a shell, and code",
+      "over": [
+        "LangGraph.js"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "docs-site": {
+      "layer": "web",
+      "title": "Documentation sites",
+      "decides": "product and developer documentation sites",
+      "choices": [
+        {
+          "option": "Astro Starlight"
+        },
+        {
+          "option": "mdBook"
+        },
+        {
+          "option": "VitePress"
+        }
+      ],
+      "why": "Starlight stays in TypeScript and Astro with search built in; mdBook for Rust books",
+      "override_when": "a project's docs live in another site generator already",
+      "over": [
+        "Docusaurus",
+        "Material for MkDocs: end of life"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "rust-toolchain": {
+      "layer": "languages",
+      "title": "Rust toolchain pinning",
+      "decides": "how a Rust project pins its compiler, components, and targets, beside mise for everything else (`toolchain-pinning`)",
+      "choices": [
+        {
+          "option": "`rust-toolchain.toml`, with mise installing everything else and leaving the Rust version to the file"
+        }
+      ],
+      "why": "every Rust tool, editor, and CI action reads it, and it holds the components and targets",
+      "override_when": "a project builds entirely through Nix",
+      "over": [
+        "mise-owned Rust: overrides the file",
+        "Nix: learning curve"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "rust-lint-policy": {
+      "layer": "languages",
+      "title": "Rust lint policy",
+      "decides": "how strict rustfmt, Clippy, and the compiler are; the Rust counterpart of `linter` and `strictness`",
+      "choices": [
+        {
+          "option": "Clippy's `pedantic` group with each allowed lint and its reason in `[workspace.lints]`, rustfmt defaults, warnings denied through `build.warnings`"
+        }
+      ],
+      "why": "Clippy catches what agents get wrong silently, as strict TypeScript does in `strictness`",
+      "override_when": "generated code or FFI bindings; allow lints for those modules only, with reasons",
+      "over": [
+        "baseline",
+        "curated lints: fewer mistakes caught"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "rust-dependency-hygiene": {
+      "layer": "languages",
+      "title": "Rust dependency hygiene",
+      "decides": "advisories, licences, sources, and unused dependencies; the Rust counterpart of `code-hygiene`",
+      "choices": [
+        {
+          "option": "cargo-deny"
+        },
+        {
+          "option": "cargo-machete, both in the full check"
+        }
+      ],
+      "why": "one policy for advisories, licences, and sources, plus an unused-dependency check fast enough for every run",
+      "override_when": "cargo-machete misreports a crate used only through macros; record the exception beside its setting",
+      "over": [
+        "cargo-audit: covered by cargo-deny",
+        "cargo-udeps: needs nightly"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "rust-tests": {
+      "layer": "languages",
+      "title": "Rust tests",
+      "decides": "running tests, and the test techniques beside them; the Rust counterpart of `unit-tests`",
+      "choices": [
+        {
+          "option": "cargo-nextest"
+        },
+        {
+          "option": "`cargo test`",
+          "when": "running doctests"
+        },
+        {
+          "option": "insta",
+          "when": "output is structured"
+        },
+        {
+          "option": "proptest",
+          "when": "parsers or invariants"
+        }
+      ],
+      "why": "nextest keeps large suites fast; snapshots and properties supplement it",
+      "override_when": "a crate with only doctests",
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "rust-async": {
+      "layer": "languages",
+      "title": "Rust async runtime",
+      "decides": "whether and how Rust code runs asynchronously; the role Effect plays in TypeScript",
+      "choices": [
+        {
+          "option": "Tokio",
+          "when": "async is needed"
+        },
+        {
+          "option": "Synchronous code",
+          "when": "a tool has no concurrent I/O"
+        }
+      ],
+      "avoid": [
+        "async-std"
+      ],
+      "why": "the crates a Rust service needs assume Tokio",
+      "override_when": "a deliberate thread-per-core design",
+      "over": [
+        "smol: fewer crates assume it",
+        "compio: specialised"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "rust-web-framework": {
+      "layer": "languages",
+      "title": "Rust web framework",
+      "decides": "HTTP services written in Rust, when a project needs one rather than a TypeScript backend (`backend-framework`)",
+      "choices": [
+        {
+          "option": "Axum"
+        },
+        {
+          "option": "Actix Web"
+        }
+      ],
+      "why": "Axum composes with Tokio and Tower; Actix Web second is user choice, no reason given",
+      "override_when": "a TypeScript backend (`backend-framework`) serves the need, which is the usual case",
+      "over": [
+        "Poem",
+        "Rocket: slow releases"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "rust-cli-args": {
+      "layer": "languages",
+      "title": "Rust CLI arguments",
+      "decides": "flags, subcommands, help, and completions for Rust CLIs",
+      "choices": [
+        {
+          "option": "clap"
+        },
+        {
+          "option": "lexopt",
+          "when": "binary size matters"
+        }
+      ],
+      "why": "clap's derive API reads like the CLI it builds, and agents reach for it",
+      "override_when": "a tiny binary where clap's size matters",
+      "over": [
+        "argh"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "rust-errors": {
+      "layer": "languages",
+      "title": "Rust error handling",
+      "decides": "typed errors and error reports",
+      "choices": [
+        {
+          "option": "thiserror",
+          "when": "a library or public API"
+        },
+        {
+          "option": "anyhow",
+          "when": "an application boundary"
+        }
+      ],
+      "why": "the standard pairing across the ecosystem",
+      "override_when": "errors need rich context across many layers",
+      "over": [
+        "SNAFU",
+        "eyre"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "rust-serialization": {
+      "layer": "languages",
+      "title": "Rust serialization",
+      "decides": "data formats and their libraries",
+      "choices": [
+        {
+          "option": "Serde with a format crate"
+        },
+        {
+          "option": "Prost",
+          "when": "a protobuf contract"
+        }
+      ],
+      "why": "one derive covers JSON, TOML, and most formats",
+      "override_when": "zero-copy reads matter",
+      "over": [
+        "rkyv",
+        "minicbor"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "rust-tui": {
+      "layer": "languages",
+      "title": "Rust terminal UIs",
+      "decides": "interactive terminal tools in Rust",
+      "choices": [
+        {
+          "option": "Ratatui",
+          "when": "a full-screen tool"
+        },
+        {
+          "option": "inquire",
+          "when": "a few prompts"
+        }
+      ],
+      "why": "Ratatui is the maintained full-screen library",
+      "override_when": "a form-heavy tool, where a widget toolkit fits",
+      "over": [
+        "Cursive"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "rust-library-publishing": {
+      "layer": "languages",
+      "title": "Rust library publishing",
+      "decides": "where Rust libraries are published and their API docs hosted",
+      "choices": [
+        {
+          "option": "crates.io and docs.rs",
+          "when": "a public library"
+        },
+        {
+          "option": "Tagged Git dependency",
+          "when": "internal or early"
+        }
+      ],
+      "why": "public crates get docs.rs for free; cargo-semver-checks and cargo-hack guard compatibility",
+      "override_when": "private crates shared across many projects",
+      "over": [
+        "private registry"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "rust-binary-distribution": {
+      "layer": "languages",
+      "title": "Rust binary distribution",
+      "decides": "how people install a Rust CLI",
+      "choices": [
+        {
+          "option": "GitHub release binaries built by dist"
+        },
+        {
+          "option": "Homebrew tap",
+          "when": "macOS and Linux developers"
+        },
+        {
+          "option": "npm platform packages",
+          "when": "the tool serves TypeScript users"
+        }
+      ],
+      "why": "users need no Rust toolchain",
+      "override_when": "the audience are Rust developers, where `cargo install` suffices",
+      "over": [
+        "crates.io with `cargo install`"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "ts-cli-framework": {
+      "layer": "languages",
+      "title": "TypeScript CLI framework",
+      "decides": "commands, arguments, validation, help, and completions for TypeScript CLIs",
+      "choices": [
+        {
+          "option": "Effect CLI",
+          "when": "the tool is built on Effect"
+        },
+        {
+          "option": "Commander",
+          "when": "plain TypeScript"
+        }
+      ],
+      "why": "an Effect tool parses its arguments into the same typed services and errors; Commander is what agents know best elsewhere",
+      "override_when": "a breaking change in Effect's unstable `cli` module is unacceptable for the tool",
+      "over": [
+        "yargs",
+        "citty",
+        "Stricli",
+        "oclif"
+      ],
+      "revisit_when": [
+        "Effect declares its `cli` module stable"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "ts-tui": {
+      "layer": "languages",
+      "title": "TypeScript terminal UIs and prompts",
+      "decides": "prompts and full-screen terminal apps in TypeScript",
+      "choices": [
+        {
+          "option": "Clack",
+          "when": "a few prompts"
+        },
+        {
+          "option": "OpenTUI",
+          "when": "rendering speed matters and the tool is a full app"
+        },
+        {
+          "option": "Ink"
+        }
+      ],
+      "why": "Clack is stable and polished for guided flows; OpenTUI's condition and Ink third are user choice, no reason given",
+      "override_when": "the tool must run on Node 24, below OpenTUI's Node 26.4 floor",
+      "over": [
+        "Ink second: the interview's recommendation",
+        "Inquirer",
+        "Effect Prompt"
+      ],
+      "revisit_when": [
+        "OpenTUI reaches 1.0"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "ts-cli-distribution": {
+      "layer": "languages",
+      "title": "TypeScript CLI distribution",
+      "decides": "what users install to run a TypeScript tool",
+      "choices": [
+        {
+          "option": "npm package with trusted publishing"
+        },
+        {
+          "option": "Bun compiled executables",
+          "when": "users should not need a runtime"
+        },
+        {
+          "option": "Homebrew tap",
+          "when": "macOS and Linux developers"
+        }
+      ],
+      "why": "developers already have a runtime, and trusted publishing removes long-lived tokens",
+      "override_when": "a private package, which publishes through OIDC without provenance",
+      "over": [
+        "Node single executable",
+        "`deno compile`",
+        "JSR"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "rust-in-typescript": {
+      "layer": "languages",
+      "title": "Rust inside TypeScript projects",
+      "decides": "how Rust code reaches a TypeScript app or tool",
+      "choices": [
+        {
+          "option": "Rust binary through npm platform packages",
+          "when": "a CLI engine, or the host runs on Bun"
+        },
+        {
+          "option": "napi-rs",
+          "when": "frequent in-process calls on Node"
+        },
+        {
+          "option": "wasm-bindgen with wasm-pack",
+          "when": "it must run in a browser"
+        }
+      ],
+      "why": "a subprocess works under Node and Bun alike, while addons on Bun are best effort",
+      "override_when": "the boundary is crossed so often that process calls are too slow",
+      "over": [
+        "Neon"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "rust-database": {
+      "layer": "languages",
+      "title": "Rust database access",
+      "decides": "SQL access and migrations for Rust services and tools",
+      "choices": [
+        {
+          "option": "SQLx"
+        },
+        {
+          "option": "rusqlite",
+          "when": "embedded SQLite in a synchronous tool"
+        }
+      ],
+      "why": "SQL-shaped and compile-checked, like Drizzle; when TypeScript shares the database, Drizzle Kit (`orm`) owns migrations",
+      "override_when": "a domain model needs an ORM's relations",
+      "over": [
+        "Diesel",
+        "SeaORM",
+        "libsql or Turso"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "rust-observability": {
+      "layer": "languages",
+      "title": "Rust observability",
+      "decides": "diagnostics, traces, and error reports from Rust",
+      "choices": [
+        {
+          "option": "`tracing` with `tracing-subscriber`"
+        },
+        {
+          "option": "Sentry Rust SDK",
+          "when": "shipped to users"
+        },
+        {
+          "option": "`tracing-opentelemetry`",
+          "when": "traces cross into other services"
+        }
+      ],
+      "why": "one instrumentation layer feeding Sentry, as the web stack does in `observability`",
+      "override_when": "a tiny synchronous tool, where `log` with `env_logger` is enough",
+      "over": [
+        "`log` with `env_logger`"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "rust-cross-compilation": {
+      "layer": "languages",
+      "title": "Rust cross-compilation",
+      "decides": "building Rust binaries for each platform",
+      "choices": [
+        {
+          "option": "GitHub Actions native matrix, driven by dist"
+        },
+        {
+          "option": "cargo-zigbuild",
+          "when": "a Linux glibc baseline or one build host"
+        }
+      ],
+      "why": "native runners build each target where it runs, and dist writes that workflow",
+      "override_when": "a target with no hosted runner",
+      "over": [
+        "cargo-xwin",
+        "cross: pre-1.0, last crates.io release 2023"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "rust-cli-tests": {
+      "layer": "languages",
+      "title": "Rust CLI integration tests",
+      "decides": "testing a Rust CLI as a process",
+      "choices": [
+        {
+          "option": "assert_cmd"
+        },
+        {
+          "option": "trycmd",
+          "when": "many command cases"
+        }
+      ],
+      "why": "precise exit-code and output checks; trycmd scales to many cases",
+      "override_when": "a full-screen terminal app, which needs PTY tests",
+      "over": [
+        "snapbox",
+        "insta-cmd: experimental"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "rust-http": {
+      "layer": "languages",
+      "title": "Rust HTTP clients",
+      "decides": "calling HTTP APIs from Rust",
+      "choices": [
+        {
+          "option": "reqwest",
+          "when": "async"
+        },
+        {
+          "option": "ureq",
+          "when": "a synchronous tool"
+        }
+      ],
+      "why": "follows `rust-async`'s async and synchronous split",
+      "override_when": "a custom transport",
+      "over": [
+        "hyper-util"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "mixed-repositories": {
+      "layer": "languages",
+      "title": "Mixed TypeScript and Rust repositories",
+      "decides": "running tasks across both languages in one repository",
+      "choices": [
+        {
+          "option": "Cargo workspace beside the pnpm workspace, with mise tasks running both"
+        },
+        {
+          "option": "Turborepo Cargo workspaces",
+          "when": "its Cargo support is stable"
+        }
+      ],
+      "why": "keeps `task-runner` and `monorepo` as they are",
+      "override_when": "cross-language caching becomes the bottleneck",
+      "over": [
+        "moon"
+      ],
+      "revisit_when": [
+        "Turborepo's Cargo workspace support leaves experimental"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "scripts": {
+      "layer": "oneoff",
+      "title": "Single-file scripts",
+      "decides": "small automations run without a project scaffold",
+      "choices": [
+        {
+          "option": "Bun script"
+        },
+        {
+          "option": "rust-script",
+          "when": "Rust crates or speed are needed"
+        }
+      ],
+      "why": "`js-runtime` already puts scripts on Bun",
+      "override_when": "a script needs a sandbox with explicit permissions",
+      "over": [
+        "Deno",
+        "Cargo script: nightly only"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "quick-ui": {
+      "layer": "oneoff",
+      "title": "Quick UIs for one-off tools",
+      "decides": "the smallest interface for a utility",
+      "choices": [
+        {
+          "option": "Single HTML file"
+        },
+        {
+          "option": "Vite app",
+          "when": "it needs packages"
+        },
+        {
+          "option": "Terminal UI"
+        }
+      ],
+      "why": "a single file opens anywhere; the terminal UI third is user choice, no reason given",
+      "override_when": "the tool must read local files or run unattended",
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "mobile-client-state": {
+      "layer": "native",
+      "title": "Mobile client state",
+      "decides": "interaction state in a mobile app that is not server data",
+      "choices": [
+        {
+          "option": "Framework-local and URL state"
+        },
+        {
+          "option": "Zustand",
+          "when": "state is shared across distant components"
+        },
+        {
+          "option": "XState",
+          "when": "a flow has many states"
+        },
+        {
+          "option": "Effect Atom"
+        }
+      ],
+      "why": "derived from `client-state`",
+      "override_when": "a mobile approach other than React Native is chosen (`mobile-approach`)",
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "mobile-server-state": {
+      "layer": "native",
+      "title": "Mobile server state",
+      "decides": "loading, caching, and invalidating remote data in a mobile app",
+      "choices": [
+        {
+          "option": "TanStack Query, wired to React Native's connectivity and app-focus events"
+        }
+      ],
+      "why": "derived from `server-state`",
+      "override_when": "a mobile approach other than React Native is chosen (`mobile-approach`)",
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "mobile-approach": {
+      "layer": "native",
+      "title": "Mobile approach",
+      "decides": "how a mobile app is built",
+      "choices": [
+        {
+          "option": "Expo"
+        },
+        {
+          "option": "Progressive web app",
+          "when": "an installable web app is enough"
+        }
+      ],
+      "why": "keeps TypeScript and React, with builds and updates as services",
+      "override_when": "deep platform integration a React Native module cannot reach",
+      "over": [
+        "React Native without Expo",
+        "Capacitor"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "mobile-navigation": {
+      "layer": "native",
+      "title": "Mobile navigation",
+      "decides": "screens, deep links, and routes in an Expo app",
+      "choices": [
+        {
+          "option": "Expo Router"
+        }
+      ],
+      "why": "file routes with deep links by default",
+      "override_when": "an existing React Navigation app",
+      "over": [
+        "React Navigation directly",
+        "Solito"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "mobile-styling": {
+      "layer": "native",
+      "title": "Mobile styling",
+      "decides": "styling native views; web CSS, including StyleX (`styling`), does not style them",
+      "choices": [
+        {
+          "option": "Unistyles"
+        },
+        {
+          "option": "NativeWind",
+          "when": "Tailwind habits matter"
+        }
+      ],
+      "why": "typed themes from brand tokens on the StyleSheet API",
+      "override_when": "a shared native and web design system, where Tamagui fits",
+      "over": [
+        "StyleSheet",
+        "Tamagui"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "mobile-storage": {
+      "layer": "native",
+      "title": "Mobile local storage",
+      "decides": "on-device data that is not secret",
+      "choices": [
+        {
+          "option": "Expo SQLite",
+          "when": "structured data"
+        },
+        {
+          "option": "MMKV",
+          "when": "preferences and small cached state"
+        }
+      ],
+      "why": "SQLite matches `primary-database`",
+      "override_when": "offline sync dictates the store (`mobile-offline-sync`)",
+      "over": [
+        "AsyncStorage",
+        "WatermelonDB"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "mobile-offline-sync": {
+      "layer": "native",
+      "title": "Mobile offline sync",
+      "decides": "local writes and server changes converging across devices",
+      "per_project": true,
+      "choices": [
+        {
+          "option": "PowerSync"
+        }
+      ],
+      "decided_by": "the conflict rules the product needs",
+      "why": "conflict rules differ per product; PowerSync fits the Postgres preference",
+      "over": [
+        "RxDB",
+        "custom outbox"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "mobile-secrets": {
+      "layer": "native",
+      "title": "Mobile secret storage",
+      "decides": "tokens and credentials on the device",
+      "choices": [
+        {
+          "option": "Expo SecureStore"
+        },
+        {
+          "option": "react-native-keychain",
+          "when": "finer biometric control"
+        }
+      ],
+      "why": "one API over Keychain and Keystore",
+      "override_when": "biometric rules beyond SecureStore",
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "mobile-tests": {
+      "layer": "native",
+      "title": "Mobile tests",
+      "decides": "component tests and on-device flows",
+      "choices": [
+        {
+          "option": "Jest with jest-expo and RN Testing Library",
+          "when": "components"
+        },
+        {
+          "option": "Maestro",
+          "when": "device flows"
+        }
+      ],
+      "why": "Expo's documented test path, plus simple device flows",
+      "override_when": "gray-box synchronisation is needed",
+      "over": [
+        "Detox"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "mobile-builds": {
+      "layer": "native",
+      "title": "Mobile builds and store submission",
+      "decides": "building, signing, and submitting store binaries",
+      "choices": [
+        {
+          "option": "EAS Build, Submit, and Workflows"
+        },
+        {
+          "option": "Fastlane in GitHub Actions",
+          "when": "the pipeline must stay in GitHub Actions"
+        }
+      ],
+      "avoid": [
+        "Appflow"
+      ],
+      "why": "no macOS build machine to own",
+      "override_when": "a client requires builds inside its own CI",
+      "over": [
+        "Codemagic",
+        "Xcode Cloud"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "mobile-ota": {
+      "layer": "native",
+      "title": "Over-the-air updates",
+      "decides": "shipping JavaScript changes between store releases",
+      "choices": [
+        {
+          "option": "EAS Update"
+        },
+        {
+          "option": "Store releases only",
+          "when": "a conservative release policy"
+        }
+      ],
+      "avoid": [
+        "CodePush"
+      ],
+      "why": "channels and rollback without running delivery",
+      "override_when": "updates must be self-hosted",
+      "over": [
+        "self-hosted expo-updates",
+        "Hot Updater"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "desktop-runtime": {
+      "layer": "native",
+      "title": "Desktop runtime",
+      "decides": "how a TypeScript interface becomes a desktop app",
+      "choices": [
+        {
+          "option": "Tauri"
+        },
+        {
+          "option": "Electron",
+          "when": "one consistent browser engine or Node APIs are required"
+        }
+      ],
+      "why": "TypeScript for the interface and Rust for the host",
+      "override_when": "web-view differences across operating systems break the product",
+      "over": [
+        "Electrobun",
+        "Neutralinojs"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "desktop-packaging": {
+      "layer": "native",
+      "title": "Desktop packaging, updates, and signing",
+      "decides": "packaging, auto-updates, and code signing for direct distribution",
+      "choices": [
+        {
+          "option": "Tauri bundler and updater",
+          "when": "Tauri"
+        },
+        {
+          "option": "electron-builder with electron-updater",
+          "when": "Electron"
+        }
+      ],
+      "why": "follows `desktop-runtime`",
+      "override_when": "store distribution, which uses the store's updates",
+      "over": [
+        "Electron Forge",
+        "Electrobun's pipeline"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "app-crash-reporting": {
+      "layer": "native",
+      "title": "Crash and error reporting for apps",
+      "decides": "crashes and errors from mobile and desktop apps",
+      "choices": [
+        {
+          "option": "Sentry"
+        }
+      ],
+      "why": "one service across web, mobile, desktop, and Rust",
+      "override_when": "a client requires another crash service",
+      "over": [
+        "Crashlytics",
+        "BugSnag",
+        "EAS Observe"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "app-analytics": {
+      "layer": "native",
+      "title": "App and game analytics",
+      "decides": "usage and player analytics outside the web",
+      "choices": [
+        {
+          "option": "PostHog",
+          "when": "an app"
+        },
+        {
+          "option": "GameAnalytics",
+          "when": "a game"
+        }
+      ],
+      "why": "the same tool as `product-analytics` for apps; player metrics for games",
+      "override_when": "a client's analytics platform is mandated",
+      "over": [
+        "Google Analytics for Firebase",
+        "Amplitude"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "in-app-purchases": {
+      "layer": "native",
+      "title": "In-app purchases",
+      "decides": "store billing and entitlements",
+      "choices": [
+        {
+          "option": "RevenueCat"
+        }
+      ],
+      "why": "Apple and Google billing without building an entitlement backend",
+      "override_when": "a single store with simple purchases",
+      "over": [
+        "Adapty"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "push": {
+      "layer": "native",
+      "title": "Push notifications",
+      "decides": "delivering push notifications",
+      "choices": [
+        {
+          "option": "Expo Push Service"
+        },
+        {
+          "option": "APNs and FCM directly",
+          "when": "control over transport and payloads"
+        }
+      ],
+      "why": "one send API for both platforms",
+      "override_when": "campaigns and segmentation are required",
+      "over": [
+        "OneSignal"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "game-tests": {
+      "layer": "games",
+      "title": "Game tests",
+      "decides": "testing game logic and rendered behaviour",
+      "choices": [
+        {
+          "option": "Vitest for logic and Playwright for rendered and input checks",
+          "when": "a web game"
+        },
+        {
+          "option": "cargo-nextest with a headless harness",
+          "when": "a Bevy game"
+        }
+      ],
+      "why": "derived from `unit-tests`, `browser-tests`, and `rust-tests`",
+      "override_when": "an engine with its own test runner",
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "game-engine": {
+      "layer": "games",
+      "title": "Game engine",
+      "decides": "the engine for a game, in TypeScript or Rust",
+      "choices": [
+        {
+          "option": "Phaser",
+          "when": "a 2D game"
+        },
+        {
+          "option": "Babylon.js",
+          "when": "a 3D game"
+        },
+        {
+          "option": "Bevy",
+          "when": "a native game in Rust"
+        }
+      ],
+      "why": "full engines rather than renderers to build an engine around",
+      "override_when": "a game needing an editor-led engine",
+      "over": [
+        "PixiJS",
+        "Three.js",
+        "PlayCanvas"
+      ],
+      "revisit_when": [
+        "Bevy reaches 1.0"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "web-game-toolchain": {
+      "layer": "games",
+      "title": "Web game toolchain",
+      "decides": "how a web game is authored and built",
+      "choices": [
+        {
+          "option": "TypeScript, Vite, and the engine package"
+        },
+        {
+          "option": "React Three Fiber",
+          "when": "React-led 3D scenes"
+        }
+      ],
+      "why": "the preferred toolchain, unchanged",
+      "override_when": "a scene-heavy game, where an editor helps",
+      "over": [
+        "Babylon.js Editor"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "game-assets": {
+      "layer": "games",
+      "title": "Game asset version control",
+      "decides": "versioning code and large binary assets",
+      "choices": [
+        {
+          "option": "Plain Git",
+          "when": "small or procedural assets"
+        },
+        {
+          "option": "Git with LFS",
+          "when": "large binary assets"
+        }
+      ],
+      "why": "nothing new until assets are large",
+      "override_when": "artists work on large binary datasets",
+      "over": [
+        "Perforce P4"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "game-distribution": {
+      "layer": "games",
+      "title": "Game distribution",
+      "decides": "where games are released",
+      "choices": [
+        {
+          "option": "Browser or static hosting",
+          "when": "a web game"
+        },
+        {
+          "option": "itch.io with butler",
+          "when": "jams and indie releases"
+        },
+        {
+          "option": "Steam",
+          "when": "a commercial PC release"
+        }
+      ],
+      "why": "each channel for its kind of release",
+      "override_when": "a mobile game, which goes through the stores",
+      "over": [
+        "mobile stores"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    },
+    "multiplayer": {
+      "layer": "games",
+      "title": "Multiplayer backend",
+      "decides": "rooms, authoritative state, and matchmaking",
+      "choices": [
+        {
+          "option": "Durable Objects with PartyServer",
+          "when": "a web game on Cloudflare"
+        },
+        {
+          "option": "Colyseus",
+          "when": "authoritative rooms on Node"
+        },
+        {
+          "option": "Nakama",
+          "when": "accounts and social features are needed"
+        }
+      ],
+      "why": "rooms on the platform the project already hosts on",
+      "override_when": "competitive real-time games needing managed server fleets",
+      "over": [
+        "PlayFab"
+      ],
+      "decided": "2026-10-20",
+      "checked": "2026-10-20"
+    }
+  }
+}

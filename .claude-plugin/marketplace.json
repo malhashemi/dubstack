@@ -1,0 +1,17 @@
+{
+  "name": "dubstack",
+  "owner": {
+    "name": "M. Adel Alhashemi",
+    "url": "https://github.com/malhashemi"
+  },
+  "description": "Dubstack: agent skills for the whole development lifecycle.",
+  "plugins": [
+    {
+      "name": "dubstack",
+      "source": "./",
+      "description": "Interviews, goals, outlines, implementation, pull request review, and the project's shared knowledge.",
+      "category": "development",
+      "keywords": ["skills", "sdlc", "workflow"]
+    }
+  ]
+}

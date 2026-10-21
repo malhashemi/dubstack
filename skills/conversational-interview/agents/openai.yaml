@@ -1,0 +1,4 @@
+interface:
+  display_name: "Conversational Interview"
+  short_description: "Gather requirements or brainstorm through conversation"
+  default_prompt: "Use $conversational-interview to talk with the person about their business needs or a problem to explore: let them speak their mind, capture what they say as it comes, reconcile it into the interview's record after the session, and compose what the target produces for them to read and correct."

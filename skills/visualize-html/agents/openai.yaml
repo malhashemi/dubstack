@@ -1,0 +1,4 @@
+interface:
+  display_name: "Visualize HTML"
+  short_description: "Turn information into visual HTML experiences"
+  default_prompt: "Use $visualize-html to make this information clear visually, with interaction where useful."

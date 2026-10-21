@@ -1,0 +1,4 @@
+interface:
+  display_name: "Skill Writing"
+  short_description: "Write focused skills that guide agent judgment"
+  default_prompt: "Use $skill-writing to turn this intent into a concise skill with a clear outcome, meaningful constraints, and room for judgment."

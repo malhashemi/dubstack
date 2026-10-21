@@ -1,0 +1,4 @@
+interface:
+  display_name: "Orchestration Setup"
+  short_description: "Decide which model owns each kind of work and how sessions reach it"
+  default_prompt: "Use $orchestration-setup to review my harnesses, models, and global instructions, then propose the orchestration layer: which model owns each role, when to delegate, and how each model is reached."
