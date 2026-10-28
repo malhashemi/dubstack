@@ -48,7 +48,7 @@ When a decision needs you, the agent builds a page with the options side by side
 
 ## Install
 
-Dubstack is one plugin with 19 skills. Install it one way per agent, because the plugin and the standalone skills together give you every skill twice.
+Dubstack is one plugin with 20 skills. Install it one way per agent, because the plugin and the standalone skills together give you every skill twice.
 
 <details>
 <summary><strong>Claude Code</strong></summary>
@@ -100,7 +100,7 @@ The [skills CLI](https://github.com/vercel-labs/skills) asks which agents to ins
 - The GitHub CLI, signed in, for issues and pull requests.
 - Python 3 for the bundled scripts, and [uv](https://docs.astral.sh/uv/) for the brand toolkit.
 
-Some skills work without Dossier: `orchestration-setup`, `stack-preferences`, `upstream-source`, `babysit-pr`, `brand-skill-generator`, `visualize-html`, `svg-design`, and `skill-writing`.
+Some skills work without Dossier: `orchestration-setup`, `stack-preferences`, `upstream-source`, `test-suite-audit`, `babysit-pr`, `brand-skill-generator`, `visualize-html`, `svg-design`, and `skill-writing`.
 
 ## Start here
 
@@ -125,7 +125,7 @@ A new project then gets its architecture through `design-interview`, the open-so
 
 ### The goal loop
 
-Every piece of work starts at `basecamp`. It chooses the route by what remains unresolved, not by the size of the work:
+Every goal starts at `basecamp`. It chooses the route by what remains unresolved, not by the size of the work:
 
 | The goal still lacks | Next stage |
 |---|---|
@@ -136,7 +136,7 @@ Every piece of work starts at `basecamp`. It chooses the route by what remains u
 | An approved outline | `implement-outline`, one continuous run |
 | A committed change | `describe-pr`, then `babysit-pr` until reviewers clear it |
 
-Every stage hands back to basecamp, which records it on the goal's page and writes the handoff that starts the next. Between features, architecture review, dependency updates, and incoming issues all become goals the same way. The [guide's map](skills/dubstack/references/flow.md) covers the whole flow.
+Every stage hands back to basecamp, which records it on the goal's page and writes the handoff that starts the next. Between features, architecture review, dependency updates, and incoming issues all become goals the same way. A test-suite audit is the exception: `test-suite-audit` runs on demand, without a goal, and ends at a pull request of its own. The [guide's map](skills/dubstack/references/flow.md) covers the whole flow.
 
 ### A goal, start to finish
 
@@ -184,6 +184,7 @@ Every stage hands back to basecamp, which records it on the goal's page and writ
 |---|---|
 | [`upstream-source`](skills/upstream-source/SKILL.md) | Chooses and pins open-source repositories as local references for your agents |
 | [`project-scaffolding`](skills/project-scaffolding/SKILL.md) | Opens a goal for a project's whole stack, or for an existing codebase's safeguards |
+| [`test-suite-audit`](skills/test-suite-audit/SKILL.md) | Cuts test and CI cost that buys no protection, proves each removal by deliberate breakage, and opens a pull request with the evidence |
 
 **The goal loop**
 
@@ -209,7 +210,7 @@ Every stage hands back to basecamp, which records it on the goal's page and writ
 If a user asked you to look at this repository, this section is for you.
 
 - **Setting it up.** Install the plugin through the route for the user's agent under [Install](#install), or with `npx skills add malhashemi/dubstack`. Most skills publish to Dossier, so check `dossier whoami` and `dossier ls` before starting one of them. If either fails, walk the user through [Dossier's setup](skills/dubstack/references/dossier-setup.md).
-- **Where to start.** `dubstack` reads where a project stands and names the next skill. If the user works with several models, `orchestration-setup` comes first. New work goes to `basecamp`.
+- **Where to start.** `dubstack` reads where a project stands and names the next skill. If the user works with several models, `orchestration-setup` comes first. New work goes to `basecamp`, except an on-demand test-suite audit, which `test-suite-audit` runs directly.
 - **Explaining it.** Each skill's `SKILL.md` is the authority on what it does, so read it before describing the skill or saying a step can be skipped. When the user asks what sets Dubstack apart, the answer is in [What makes it different](#what-makes-it-different). Each decision exists as a page for the user and a record for you, decisions go to the user and facts to you, goals keep their record across sessions, and every stage proves its work. Be plain about the cost. Most stages need Dossier, and the longer routes take more time than making a small change directly.
 
 ## Built with T3 Code
