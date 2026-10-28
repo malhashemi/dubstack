@@ -21,7 +21,7 @@ Work on a branch of its own from the repository's base, unless the user names on
 
 ## Map the suite
 
-Build a lean map: languages and frameworks; unit, integration, end-to-end, contract, and snapshot tests by module; the CI jobs with their matrix, runner sizes, triggers, caches, and retries; and how much Git and CI history is available. Measure at the finest practical grain, a test case before a file and a file before a job.
+Build a lean map: languages and frameworks; counts of unit, integration, end-to-end, contract, and snapshot tests by module and type, stating collection limits where counts are unavailable; the CI jobs with their matrix, runner sizes, triggers, caches, and retries; and how much Git and CI history is available. Measure at the finest practical grain, a test case before a file and a file before a job.
 
 ## Gather the evidence
 
@@ -77,8 +77,8 @@ Open or update the pull request with the repository's usual tooling and conventi
 
 ## Completion
 
-The audit is complete when its justified changes are in an open pull request with the latest commits pushed, every deliberate fault is gone from the diff, and the description carries the evidence above. Report the pull request's URL and the current state of its checks and reviews as they are.
+The audit is complete when its justified changes are verified and in an open pull request with the latest commits pushed, every deliberate fault is gone from the diff, and the description carries the evidence above. Resolve failures caused by the change before declaring completion. If a genuine blocker prevents that, report the unfinished work and what is needed to resume. Report the pull request's URL and the current state of its checks and reviews as they are.
 
-An open pull request is not a mergeable one. Call it ready only when the repository's merge process is satisfied for the current revision: required checks green and required reviews cleared. When checks or reviews are pending, or a failure stems from the change, either carry it through the platform's workflow, which `babysit-pr` does, or report it as not yet ready with what remains. Leave merging and releasing to the user.
+An open pull request is not a mergeable one. Call it ready only when the repository's merge process is satisfied for the current revision: required checks green and required reviews cleared. When checks or reviews are pending, either carry it through the platform's workflow, which `babysit-pr` does, or hand it off as not yet ready with what remains. Leave merging and releasing to the user.
 
 When the evidence supports no change, open no pull request. Report what was measured, the verdicts, and why nothing earned a change. A read-only audit ends the same way, with the findings and the changes they would support.
