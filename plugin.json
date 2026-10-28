@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "dubstack",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Agent skills for the whole development lifecycle: interviews that settle decisions with you on interactive pages, goals carried across stages, outlines, implementation, pull request review, and the project's shared knowledge.",
   "author": {
     "name": "M. Adel Alhashemi",
@@ -10,5 +10,14 @@
   "homepage": "https://github.com/malhashemi/dubstack",
   "repository": "https://github.com/malhashemi/dubstack",
   "license": "MIT",
-  "keywords": ["skills", "sdlc", "workflow", "interview", "planning", "implementation", "code-review", "dossier"]
+  "keywords": [
+    "skills",
+    "sdlc",
+    "workflow",
+    "interview",
+    "planning",
+    "implementation",
+    "code-review",
+    "dossier"
+  ]
 }
