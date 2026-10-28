@@ -24,7 +24,7 @@ Place the project on the map: new or existing, the context it has, and the goals
 
 Work in flight comes first. A goal waiting on the user, an unfinished stage, or a pull request awaiting review usually beats starting something new; say what it waits on.
 
-Then name one next step: the skill, why it fits now, what it needs, and what it leaves for the step after. When several fit, or the user's intent decides between them, give the choice with your recommendation. New work goes to `basecamp`, which records the goal and chooses its route; an open goal's next stage is in its record.
+Then name one next step: the skill, why it fits now, what it needs, and what it leaves for the step after. When several fit, or the user's intent decides between them, give the choice with your recommendation. New goals go to `basecamp`, which records the goal and chooses its route; an open goal's next stage is in its record. An on-demand test-suite cleanup can start directly with `test-suite-audit`, which carries justified changes to an open pull request without requiring a goal or Dossier record.
 
 When the recommended skill is not available in this session, say so and how to add it: the Dubstack plugin for the user's agent, or `npx skills add malhashemi/dubstack --skill <name>`. When the next step needs Dossier and it is not set up, guide the user through setting it up before starting that step, as [Dossier setup](references/dossier-setup.md) describes.
 

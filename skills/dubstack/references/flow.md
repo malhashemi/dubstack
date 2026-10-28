@@ -35,7 +35,7 @@ The summaries below orient. Each skill's own instructions govern what it does, w
 
 ## The goal loop
 
-`basecamp` is the front door for any piece of work, from a one-line fix to a loose set of ideas. It records the goal and chooses the route by what remains unresolved:
+`basecamp` is the front door for any goal, from a one-line fix to a loose set of ideas. Skills that act on demand, such as a test-suite audit, run without one. Basecamp records the goal and chooses the route by what remains unresolved:
 
 | The goal still lacks | Next stage | Then |
 |---|---|---|
@@ -55,6 +55,7 @@ Each stage ends by naming its output for the next stage, and the user returns to
 - **Reference sources:** `upstream-source`, update mode, when a dependency's version moves.
 - **Dependencies:** a bot such as Renovate opens the update pull requests and `babysit-pr` carries each to merge readiness. It merges only when requested. A major upgrade that needs code changes becomes a goal.
 - **Issues:** each one worth doing becomes a goal through basecamp.
+- **Test suite:** `test-suite-audit`, on demand, when the tests or CI cost more than the protection they give. It runs without a goal or Dossier and ends at a pull request of its own, which `babysit-pr` can carry to merge readiness.
 
 ## Anywhere
 
@@ -68,4 +69,4 @@ Each stage ends by naming its output for the next stage, and the user returns to
 
 The stages that keep records and pages in the project's tree need Dossier: `project-home`, `basecamp`, `research`, `design-interview`, `conversational-interview`, `structure-outline`, `implement-outline`, `describe-pr`, `architecture-review`, and `project-scaffolding`, which runs as a goal. [Dossier setup](dossier-setup.md) walks through access to an existing deployment or hosting one.
 
-These work without it: `orchestration-setup`, `stack-preferences`, `upstream-source`, `babysit-pr`, `brand-skill-generator` (its interview runs from a temporary folder), `visualize-html` (local pages), `svg-design`, and `skill-writing`.
+These work without it: `orchestration-setup`, `stack-preferences`, `upstream-source`, `test-suite-audit`, `babysit-pr`, `brand-skill-generator` (its interview runs from a temporary folder), `visualize-html` (local pages), `svg-design`, and `skill-writing`.

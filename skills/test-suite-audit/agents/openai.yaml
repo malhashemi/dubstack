@@ -1,0 +1,4 @@
+interface:
+  display_name: "Test Suite Audit"
+  short_description: "Cut test and CI cost that buys no protection, proven by deliberate breakage, in a pull request"
+  default_prompt: "Use $test-suite-audit to measure this repository's tests and CI, prove with deliberate breakage which tests can go, merge, move, or be fixed without losing protection, and open a pull request with the evidence."
