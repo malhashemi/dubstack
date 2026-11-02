@@ -83,7 +83,7 @@ You own the record's content; the renderer owns presentation and publishes the l
 
 ## Handing off
 
-End with a message the user can use to start the next stage, shown in a Markdown code block so it can be copied whole. Name its skill and, for `design-interview`, its profile. Include the record path, goal directory, and any context the completed stage identified for its successor, such as a branch and worktree or an approved outline. Close with: "When this stage is complete, use the `basecamp` skill with <record path> to record it; it writes the handoff to the next stage." Open the goal page for the user alongside the message.
+End with a message the user can use to start the next stage, shown in a Markdown code block so it can be copied whole. Name its skill and, for `design-interview`, its profile. Include the record path, goal directory, paths to the successor's required artifacts, and any continuation state not recorded there, such as an active branch and worktree or outstanding verification. Reference the receiving skill and repository instructions instead of restating them. Close with: "When this stage is complete, use the `basecamp` skill with <record path> to record it; it writes the handoff to the next stage." Open the goal page for the user alongside the message.
 
 For a goal done now, the message names the branch, its worktree, the issue, and the goal's directory with its demos, and needs no closing line.
 

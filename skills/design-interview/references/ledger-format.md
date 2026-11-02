@@ -70,7 +70,7 @@ Fit the options to the question. Lettered alternatives suit most decisions; a pr
 
 Attach an exact artifact when an entry or option is a shape: a contract, schema, signature, sequence, message, or code sketch. Indent a fenced block under it, and say whether it is a binding contract or an illustrative sketch. Copy it exactly, and write identifiers (types, endpoints, tables, fields, paths) in backticks as the artifact or code spells them. When an option is chosen, its artifact moves unchanged into the settled entry; a later design change edits the artifact here first. If the confidentiality line forbids copying a source's artifact, cite it in `source` instead.
 
-An approved mockup or state demo is a file artifact: `artifact=artifacts/<ID>-<slug>.html`, beside the ledger. Name it when the question resolves; the next revision saves the chosen drawing there. From then on the file is exact: every revision embeds it unchanged, and it freezes with the ledger at handoff. A proposed change to that design is a new question with its own drawing, and the approved file stays as it is until the change is decided.
+An approved mockup or state demo is a file artifact: `artifact=artifacts/<ID>-<slug>.html`, beside the ledger. Name it when the question resolves; the next revision saves the chosen drawing there. From then on the file stays unchanged and freezes with the ledger at handoff. The [artifact brief](artifact-brief.md) governs how preserved files appear on the page. A proposed change to that design is a new question with its own drawing, and the approved file stays as it is until the change is decided.
 
 ## Behaviours and constraints
 
