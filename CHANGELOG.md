@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/malhashemi/dubstack/compare/v0.2.1...v0.2.2) (2026-11-02)
+
+
+### Bug Fixes
+
+* allow clearer artifact layouts and focused handoffs ([#5](https://github.com/malhashemi/dubstack/issues/5)) ([b259973](https://github.com/malhashemi/dubstack/commit/b259973636957749faefc3f5beaf699933612943))
+
 ## [0.2.1](https://github.com/malhashemi/dubstack/compare/v0.2.0...v0.2.1) (2026-11-02)
 
 
