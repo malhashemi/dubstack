@@ -4,14 +4,14 @@ Build an architecture review's pages for the project's owner and team, and publi
 
 ## The pass page
 
-Write `index.html` in the pass folder, a body page wrapped by the tree's layouts. Declare `findings.md` as its agent version with `<link rel="alternate" type="text/markdown" href="findings.md">`. If a page already exists there, change what the account changed, and keep its design language and layout.
+Write `index.html` in the pass folder, a body page wrapped by the tree's layouts. Declare `findings.md` as its agent version with `<link rel="alternate" type="text/markdown" href="findings.md">`. If a page already exists there, update it from the current account. Preserve its design language by default, and reorganize the layout when that improves the explanation.
 
 The first screen says what was reviewed, when, at which commit, and whether relevant uncommitted changes were included. Show the recommendation linked to its candidate, or the account's explanation that none is ready. A pass with no candidates still has a page showing its scope, result, and limitations.
 
 Each candidate is one item, with its ID as the element's `id`:
 
 - **The before and after drawing carries the weight.** Draw what the account's drawing idea describes, in the form that best shows its friction and proposed deepening. A dependency graph, a call graph collapsing into one module, a cross-section of the layers a call passes through, or an interface drawn against the implementation it hides are starting points, not a menu. Make the relationship understandable from the drawing and concise labels; choose variety only where it helps. Draw modules, seams, leaks, and deep modules the same way in every drawing, with a small legend on the page, so each drawing reads like the last. Label the after as proposed and keep it at the account's level of detail, leaving interface design to the goal.
-- **Prose stays sparse:** the problem and the direction in a sentence each, and the gains as short lines.
+- **Prose stays sparse:** explain the problem, direction, and gains concisely beside the drawing.
 - Strength and dependency categories read at a glance; limitations and deletion-test results stay accessible with the evidence.
 - The modules, files, and evidence are within reach without crowding the drawing. Link repository files through their remote host at the inspected commit and lines when available; identify uncommitted evidence without presenting a commit link as its exact source. Use relative links for tree files and plain text for machine-local paths.
 - A conflict with a recorded decision stands out, with that decision's reason.

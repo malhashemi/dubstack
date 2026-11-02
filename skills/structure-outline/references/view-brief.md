@@ -4,7 +4,7 @@ Render the structure outline as one HTML view for the owner to review, approve, 
 
 Use a body page wrapped by the tree's layouts. Declare the outline as the view's agent-readable version with `<link rel="alternate" type="text/markdown" href="<the outline's path relative to the view>">`, so an agent reading the view's link receives the source outline.
 
-Write to the path in the outline's `view` front matter field. If a view already exists there, change what the outline changed, preserving its design language and layout unless the outline's structure has changed enough that the old layout no longer fits.
+Write to the path in the outline's `view` front matter field. If a view already exists there, update it from the current outline. Preserve its design language by default, and reorganize the layout when that improves the explanation.
 
 ## What the view shows
 

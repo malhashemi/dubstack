@@ -1,6 +1,6 @@
 # Walkthrough brief
 
-Hand this brief to a delegated builder and instruct it to follow `visualize-html`. Fill the `{placeholders}` and keep the rest as written; it is the page contract. Put direction specific to this pull request in `{NOTES}`, or leave it empty. When the work has no outline, drop the outline line and say so in `{NOTES}`: the builder then orders the change by concern and describes verification from what the description and the commits show. Use absolute paths throughout.
+Hand this brief to a delegated builder and instruct it to follow `visualize-html`. Fill the `{placeholders}` and keep the rest as written; it is the page contract. Use `{NOTES}` for reader feedback and task-specific context or constraints the builder cannot recover from its other inputs. State the required reading outcome; label your own visual ideas as suggestions, and attribute presentation requirements to the user or page contract. Reference standing skill and repository instructions instead of repeating them. Leave the notes empty when there is nothing to add. When the work has no outline, drop the outline line and say so in `{NOTES}`: the builder then orders the change by concern and describes verification from what the description and the commits show. Use absolute paths throughout.
 
 ---
 
