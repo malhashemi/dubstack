@@ -2,7 +2,7 @@
 
 Render a page that shows the goal's status and gives its owner access to the work produced along the way. Use the goal record and its linked artifacts as the source of truth. Preserve those sources; your responsibility is the page and its layout. Read `visualize-html` for presentation and verification, including its Dossier guidance for pages published to the project tree.
 
-Write to the record's `page` path, normally `index.html` in the goal directory. Use the supplied change summary to update an existing page while preserving its design language and layout. Reorganize only when the goal has changed enough that the existing structure no longer fits.
+Write to the record's `page` path, normally `index.html` in the goal directory. Use the supplied change summary to update an existing page. Preserve its design language by default, and reorganize the layout when that makes the goal and its current state easier to understand.
 
 For Dossier pages, use the tree's shared layout and theme, and maintain the goal's `_layout.html`. That layout gives the goal's pages, including stage pages that inherit it, the goal title, stage navigation with links, and an indication of the current stage. Declare the record as the page's agent-readable version with `<link rel="alternate" type="text/markdown" href="GOAL.md">`.
 

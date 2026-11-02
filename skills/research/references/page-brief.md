@@ -4,7 +4,7 @@ Render the research account as one HTML page for its owner and team, and publish
 
 Use a body page wrapped by the tree's layouts. Declare `research.md` as the agent-readable version with `<link rel="alternate" type="text/markdown" href="research.md">`, so an agent reading the page's link receives the source account.
 
-Write the page to `research.html` beside `research.md`. If a page already exists there, update it: change what the account and the reports changed, and keep its design language and layout.
+Write the page to `research.html` beside `research.md`. If a page already exists there, update it from the current account and reports. Preserve its design language by default, and reorganize the layout when that improves the explanation.
 
 ## What the page shows
 

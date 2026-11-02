@@ -2,7 +2,7 @@
 
 Hand this brief to the composer with its `{placeholders}` filled, and have it use the `visualize-html` skill. Keep the rest as written: it is the document's contract. Set `{RECORD_FORMAT_PATH}` to the full path of the bundled [requirements record](requirements-record.md). Set `{DOC_PATH}` to `customer/index.html` within the interview's folder, or another file in `customer/` for a separately requested view. If the page exists, including one used for visual rounds, include the "Revision" section and set `{ANSWERS_FORM}` to its recorded answers form target and `id`.
 
-Set `{LANGUAGE}` to the readers' language, with any second language they requested. Take `{DESIGN_DIRECTION}` from the owner's brand or design system when one exists; otherwise leave it to the composer. Put direction specific to this composition in `{NOTES}`, such as the sections a standard layout requires, or leave it empty.
+Set `{LANGUAGE}` to the readers' language, with any second language they requested. Take `{DESIGN_DIRECTION}` from the owner's brand or design system when one exists; otherwise leave it to the composer. Use `{NOTES}` for reader feedback and task-specific context or constraints the composer cannot recover from its other inputs. State the required reading outcome; label your own visual ideas as suggestions, and attribute presentation requirements to the user or an applicable document standard. Reference standing skill and repository instructions instead of repeating them. Leave the notes empty when there is nothing to add.
 
 ---
 
