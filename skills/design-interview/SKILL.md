@@ -135,6 +135,7 @@ The profile defines completion. An empty frontier is necessary, unless the profi
 
 Then hand off:
 
+- Before freezing, label time-sensitive status on the page with the date it describes. For a basecamp goal, link to the goal page for current progress.
 - Freeze the ledger where it is, with its artifact files beside it, and name it to the user as the input for the stage the profile names.
 - Write the glossary changes into the project's `glossary/glossary.json`, following [glossary guidance](references/glossary.md), unless the profile leaves the glossary unchanged. Later stages read them there.
 - Append every entry marked `found` to the research artifact named in the ledger's `inputs`, under one heading for findings made during design, each with its source. When the inputs name no research artifact, the frozen ledger alone carries them.
