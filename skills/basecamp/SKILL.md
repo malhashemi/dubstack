@@ -29,7 +29,7 @@ Choose from the stages below by what the goal still lacks, explain the choice in
 
 | Step | Skill | Choose it when | Then |
 |---|---|---|---|
-| Do it now | the session that chose it | the intent is clear, the facts can be found while working, nothing is left for the user to decide, and the work fits one session | Pull request, for a code change |
+| Do it now | `ship`, in the session that chose it | the intent is clear, the facts can be found while working, nothing is left for the user to decide, and the work fits one session | Done once merged |
 | Research | `research` | the next decision waits on facts too large to find along the way, or on facts best found without the goal steering them | Choose again |
 | Design discussion | `design-interview`, design discussion profile | decisions remain for the user, and the product and technical choices are entangled in one piece of work | Structure outline |
 | PRD | `design-interview`, PRD profile | the product framing itself is open, or the product and technical design are large enough to settle separately | TDD |
@@ -50,9 +50,9 @@ For goals with pages, begin the issue body with one line of Dossier links, start
 Give every goal a directory at `goals/<slug>/` in the project's local copy. Choose a short, unique slug. Stages store their artifacts there for publication with the tree; keep unpublished material in a `private/` folder.
 
 <important if="the next step is to do it now">
-Make the change in this session on a separate branch named by the repository's conventions. Verify it with appropriate tools, such as a browser for a visible change. When users can see or do something new, capture a demo during verification and save it in the goal's `demos/` directory. Examples include before and after screenshots, a short video, or a terminal transcript. Keep each file under Dossier's 50 MiB limit, compressing videos as needed. Commit the change and hand off to the pull request stage.
+Use the `ship` skill in this session, giving it the goal as you stated it, the issue, and the goal's directory. It makes and proves the change, saves demos in the goal's `demos/` directory, and carries the pull request to merge readiness, so this route has no handoff between sessions. Keep each demo under Dossier's 50 MiB limit, compressing videos as needed. An outcome that needs no code change is delivered here directly.
 
-This route needs no goal record, goal page, or entry in `goals/goals.json`. Share its demos through the pull request.
+This route needs no goal record, goal page, or entry in `goals/goals.json`. Its demos reach the reader through the pull request.
 </important>
 
 For other goals, read [the goal record](references/goal-record.md) and write `GOAL.md` in the goal's directory. Add an entry to the `goals` list in `goals/goals.json` with `slug`, `title`, `link`, `opened` in `YYYY-MM-DD` format, and `status` set to `open`. Have the page rendered and published, then hand off to the next stage.
@@ -85,7 +85,7 @@ You own the record's content; the renderer owns presentation and publishes the l
 
 End with a message the user can use to start the next stage, shown in a Markdown code block so it can be copied whole. Name its skill and, for `design-interview`, its profile. Include the record path, goal directory, paths to the successor's required artifacts, and any continuation state not recorded there, such as an active branch and worktree or outstanding verification. Reference the receiving skill and repository instructions instead of restating them. Close with: "When this stage is complete, use the `basecamp` skill with <record path> to record it; it writes the handoff to the next stage." Open the goal page for the user alongside the message.
 
-For a goal done now, the message names the branch, its worktree, the issue, and the goal's directory with its demos, and needs no closing line.
+A goal done now ends with `ship`'s report in place of a handoff message.
 
 ## Completion
 
@@ -95,7 +95,7 @@ Taking in a goal is complete when:
 - Every question that would change the goal, its scope, or the next step is answered, or recorded under Open for the stage that will answer it.
 - The issue is open, or your report says why there is none.
 - The next step is chosen, with its reason.
-- For the "Do it now" route, the change is verified, committed on its branch, and handed to the pull request stage.
+- For the "Do it now" route, `ship` has reached its own completion.
 - For other goals, the record is written, the goal is listed in `goals/goals.json`, the published page reflects the record, the issue links to it when an issue exists, and the handoff message is ready.
 
 Recording a completed stage requires a current record and page that account for its artifacts, resolved questions, and new questions. Any issue must link to the stage's page when one exists and carry the current stage label. The handoff must be ready unless the goal is complete.

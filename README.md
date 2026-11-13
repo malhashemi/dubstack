@@ -48,7 +48,7 @@ When a decision needs you, the agent builds a page with the options side by side
 
 ## Install
 
-Dubstack is one plugin with 20 skills. Install it one way per agent, because the plugin and the standalone skills together give you every skill twice.
+Dubstack is one plugin with 22 skills. Install it one way per agent, because the plugin and the standalone skills together give you every skill twice.
 
 <details>
 <summary><strong>Claude Code</strong></summary>
@@ -100,13 +100,14 @@ The [skills CLI](https://github.com/vercel-labs/skills) asks which agents to ins
 - The GitHub CLI, signed in, for issues and pull requests.
 - Python 3 for the bundled scripts, and [uv](https://docs.astral.sh/uv/) for the brand toolkit.
 
-Some skills work without Dossier: `orchestration-setup`, `stack-preferences`, `upstream-source`, `test-suite-audit`, `babysit-pr`, `brand-skill-generator`, `visualize-html`, `svg-design`, and `skill-writing`.
+Some skills work without Dossier: `orchestration-setup`, `stack-preferences`, `upstream-source`, `test-suite-audit`, `ship`, `describe-pr`, `babysit-pr`, `modernize`, `brand-skill-generator`, `visualize-html`, `svg-design`, and `skill-writing`.
 
 ## Start here
 
 1. **Tell your agents who does what.** If you work with more than one model, run `orchestration-setup` once. It reads your current global instructions and your setup, then writes which model owns implementation, review, research, and the rest, and how a session reaches each one.
 2. **Ask the guide.** Run `dubstack` in any project and ask where it stands. It reads the repository, the project's pages, and its open pull requests, then names the next skill and why, starting with work already in progress.
 3. **Bring work to `basecamp`.** Whether it's a one-line fix or a loose set of ideas, basecamp records the goal and chooses its route.
+4. **Or say `ship`.** When you've already settled something in conversation, `ship` takes it from there to a pull request that is ready to merge, without a goal or a record, while you do something else.
 
 ## How it works
 
@@ -129,14 +130,14 @@ Every goal starts at `basecamp`. It chooses the route by what remains unresolved
 
 | The goal still lacks | Next stage |
 |---|---|
-| Nothing: the intent is clear and the work fits one session | Do it now, then the pull request |
+| Nothing: the intent is clear and the work fits one session | Do it now: `ship` carries it to a merge-ready pull request |
 | Facts too large to find along the way | `research` |
 | Decisions only you can make | `design-interview`: a design discussion, or a PRD then a TDD |
 | Only a plan for work in several phases | `structure-outline` |
 | An approved outline | `implement-outline`, one continuous run |
 | A committed change | `describe-pr`, then `babysit-pr` until reviewers clear it |
 
-Every stage hands back to basecamp, which records it on the goal's page and writes the handoff that starts the next. Between features, architecture review, dependency updates, and incoming issues all become goals the same way. A test-suite audit is the exception: `test-suite-audit` runs on demand, without a goal, and ends at a pull request of its own. The [guide's map](skills/dubstack/references/flow.md) covers the whole flow.
+Every stage hands back to basecamp, which records it on the goal's page and writes the handoff that starts the next. Between features, architecture review, dependency updates, and incoming issues all become goals the same way. Two skills run without a goal and end at a pull request of their own: `ship`, for work a conversation has already settled, and `test-suite-audit`, on demand. The [guide's map](skills/dubstack/references/flow.md) covers the whole flow.
 
 ### A goal, start to finish
 
@@ -196,6 +197,8 @@ Every stage hands back to basecamp, which records it on the goal's page and writ
 | [`implement-outline`](skills/implement-outline/SKILL.md) | Builds an approved outline in one verified, reviewed run |
 | [`describe-pr`](skills/describe-pr/SKILL.md) | Opens the pull request with demos attached and a walkthrough for larger changes |
 | [`babysit-pr`](skills/babysit-pr/SKILL.md) | Carries a pull request through CI and review until it is cleared to merge |
+| [`ship`](skills/ship/SKILL.md) | Takes work a conversation settled to a proven, reviewed, merge-ready pull request in one unattended run |
+| [`modernize`](skills/modernize/SKILL.md) | Brings an aging pull request up to date, after judging whether to rebase, rework, or close it |
 
 **Craft**
 
@@ -210,7 +213,7 @@ Every stage hands back to basecamp, which records it on the goal's page and writ
 If a user asked you to look at this repository, this section is for you.
 
 - **Setting it up.** Install the plugin through the route for the user's agent under [Install](#install), or with `npx skills add malhashemi/dubstack`. Most skills publish to Dossier, so check `dossier whoami` and `dossier ls` before starting one of them. If either fails, walk the user through [Dossier's setup](skills/dubstack/references/dossier-setup.md).
-- **Where to start.** `dubstack` reads where a project stands and names the next skill. If the user works with several models, `orchestration-setup` comes first. New work goes to `basecamp`, except an on-demand test-suite audit, which `test-suite-audit` runs directly.
+- **Where to start.** `dubstack` reads where a project stands and names the next skill. If the user works with several models, `orchestration-setup` comes first. New work goes to `basecamp`, with two exceptions: work the conversation has already settled, which `ship` carries to a merge-ready pull request, and an on-demand test-suite audit, which `test-suite-audit` runs directly.
 - **Explaining it.** Each skill's `SKILL.md` is the authority on what it does, so read it before describing the skill or saying a step can be skipped. When the user asks what sets Dubstack apart, the answer is in [What makes it different](#what-makes-it-different). Each decision exists as a page for the user and a record for you, decisions go to the user and facts to you, goals keep their record across sessions, and every stage proves its work. Be plain about the cost. Most stages need Dossier, and the longer routes take more time than making a small change directly.
 
 ## Built with T3 Code
@@ -222,7 +225,7 @@ Dubstack is developed and run in [T3 Code](https://t3.codes), an agentic develop
 This set of skills wouldn't exist without what these people and projects taught:
 
 - **[HumanLayer](https://github.com/humanlayer/humanlayer)** and its research, plan, implement loop, explained in [Advanced Context Engineering for Coding Agents](https://humanlayer.com/blog/advanced-context-engineering). Dubstack's goal loop builds on it.
-- **[Theo](https://www.youtube.com/@t3dotgg)**, whose videos shaped the long-running, goal-based way of working, and whose [T3 Code](https://t3.codes) runs it.
+- **[Theo](https://www.youtube.com/@t3dotgg)**, whose videos shaped the long-running, goal-based way of working, and whose [T3 Code](https://t3.codes) runs it. `modernize` is his, from [tstack](https://github.com/t3dotgg/tstack), nearly word for word, and `ship` builds on tstack's `full-send` and `full-stop`.
 - **[Matt Pocock's skills](https://github.com/mattpocock/skills)**, for interviewing towards a shared understanding, a project's vocabulary, and deep modules.
 - **[Superpowers](https://github.com/obra/superpowers)**, for showing that a whole development method can live in skills.
 - **[Anthropic's Agent Skills](https://github.com/anthropics/skills)** and the [Agent Skills format](https://agentskills.io), which make skills portable across agents.

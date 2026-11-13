@@ -35,11 +35,11 @@ The summaries below orient. Each skill's own instructions govern what it does, w
 
 ## The goal loop
 
-`basecamp` is the front door for any goal, from a one-line fix to a loose set of ideas. Skills that act on demand, such as a test-suite audit, run without one. Basecamp records the goal and chooses the route by what remains unresolved:
+`basecamp` is the front door for any goal, from a one-line fix to a loose set of ideas. Skills that act on demand, such as a test-suite audit, run without one. So does `ship`, for work a conversation has already settled: it goes from that conversation to a merge-ready pull request in one unattended run, with no issue, goal record, or page, and sends anything still unsettled back to basecamp. Basecamp records the goal and chooses the route by what remains unresolved:
 
 | The goal still lacks | Next stage | Then |
 |---|---|---|
-| Nothing: the intent is clear and the work fits one session | Do it now | Pull request |
+| Nothing: the intent is clear and the work fits one session | Do it now, through `ship` in the same session | Done once merged |
 | Facts too large to find along the way | `research` | Choose again |
 | Decisions where product and technical choices are entangled | `design-interview`, design discussion | Structure outline |
 | An open product framing, or product and technical design large enough to settle separately | `design-interview`, PRD, then TDD | Structure outline |
@@ -60,13 +60,15 @@ Each stage ends by naming its output for the next stage, and the user returns to
 ## Anywhere
 
 - **`research`** answers questions without a goal.
+- **`ship`** takes work a conversation settled to a merge-ready pull request, and merges only when asked.
 - **`babysit-pr`** carries any pull request through CI and review, including a bot's.
+- **`modernize`** brings an aging pull request up to date, after judging whether it should be rebased, reworked, or closed.
 - **`visualize-html`** makes any visual explanation, comparison, or feedback page.
 - **`svg-design`** makes logos, icons, and other vector graphics.
 - **`skill-writing`** writes or revises agent skills.
 
 ## What needs Dossier
 
-The stages that keep records and pages in the project's tree need Dossier: `project-home`, `basecamp`, `research`, `design-interview`, `conversational-interview`, `structure-outline`, `implement-outline`, `describe-pr`, `architecture-review`, and `project-scaffolding`, which runs as a goal. [Dossier setup](dossier-setup.md) walks through access to an existing deployment or hosting one.
+The stages that keep records and pages in the project's tree need Dossier: `project-home`, `basecamp`, `research`, `design-interview`, `conversational-interview`, `structure-outline`, `implement-outline`, `architecture-review`, and `project-scaffolding`, which runs as a goal. [Dossier setup](dossier-setup.md) walks through access to an existing deployment or hosting one.
 
-These work without it: `orchestration-setup`, `stack-preferences`, `upstream-source`, `test-suite-audit`, `babysit-pr`, `brand-skill-generator` (its interview runs from a temporary folder), `visualize-html` (local pages), `svg-design`, and `skill-writing`.
+These work without it: `orchestration-setup`, `stack-preferences`, `upstream-source`, `test-suite-audit`, `ship`, `describe-pr` (its description and walkthrough stay local), `babysit-pr`, `modernize`, `brand-skill-generator` (its interview runs from a temporary folder), `visualize-html` (local pages), `svg-design`, and `skill-writing`.
