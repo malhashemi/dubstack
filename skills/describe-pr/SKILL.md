@@ -9,7 +9,11 @@ Create or update the pull request for one piece of finished work so a reviewer u
 
 ## Inputs
 
-The handoff names the branch, its worktree, the goal's directory, and any issue or approved outline. Without a goal, take the branch from the user and use `pr-<slug>/` at the root of the local copy as the artifact directory, with a short slug naming the change. Work in that worktree. Sync the project's local copy using its `AGENTS.md` commands before reading the artifacts.
+The handoff names the branch, its worktree, the goal's directory, and any issue or approved outline. Without a goal, take the branch and the location of any demos from the request and use `pr-<slug>/` at the root of the local copy as the artifact directory, with a short slug naming the change. Work in that worktree. Sync the project's local copy using its `AGENTS.md` commands before reading the artifacts.
+
+<important if="the project has no Dossier tree, so its `AGENTS.md` has no Dossier entry">
+Work without a local copy. Use a `pr-<slug>/` directory outside the repository's tracked files as the artifact directory, and leave out the synchronization, the glossary, and publication. A walkthrough is then a local page: have the builder make it there, open it for the user, give its path in your report, and leave it out of the body's links.
+</important>
 
 The goal's directory in the local copy holds the design and outline, when present, and the `demos/` recorded during verification. Write this skill's artifacts there. Read the outline and every input listed under `design` in its front matter in full. Without an outline, use the branch, issue, demos, and diff. In either case, read the repository's instructions and the complete diff against the base branch, with enough surrounding code to understand the change.
 
@@ -81,7 +85,7 @@ The work is complete when all of these hold:
 - Its body has the four sections, and every user-facing change is shown by a demo, a transcript, or a sketch, or is named in your report as lacking one.
 - Every attachment uploaded: the published body (`gh pr view --json body`) contains no local path, and each video stands alone in its paragraph. A partial upload still updates the pull request, and only the command's exit status shows the failure, so a returned URL is not proof.
 - For a larger change, the walkthrough accounts for every changed file, renders in a browser, and is linked from the body.
-- The final `pr-description.md` and any walkthrough are published with the local copy. If Dossier cannot be reached, keep the artifacts locally and report them as unpublished, with any verification you could not complete.
+- The final `pr-description.md` and any walkthrough are published with the local copy, when the project has a Dossier tree. If Dossier cannot be reached, keep the artifacts locally and report them as unpublished, with any verification you could not complete.
 
 ## Report
 

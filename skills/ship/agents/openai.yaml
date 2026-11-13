@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ship"
+  short_description: "Take settled work to a proven, reviewed, merge-ready pull request, unattended"
+  default_prompt: "Use $ship to take what we settled here to a pull request that is ready for me to merge. I am not watching this thread."
