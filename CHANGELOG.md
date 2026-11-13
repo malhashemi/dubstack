@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/malhashemi/dubstack/compare/v0.2.2...v0.3.0) (2026-11-13)
+
+
+### Features
+
+* add ship and modernize skills ([#7](https://github.com/malhashemi/dubstack/issues/7)) ([34b3202](https://github.com/malhashemi/dubstack/commit/34b3202f936864f1c4f17397849344118605eb50))
+
 ## [0.2.2](https://github.com/malhashemi/dubstack/compare/v0.2.1...v0.2.2) (2026-11-02)
 
 
