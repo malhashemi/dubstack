@@ -130,10 +130,10 @@ Every goal starts at `basecamp`. It chooses the route by what remains unresolved
 
 | The goal still lacks | Next stage |
 |---|---|
-| Nothing: the intent is clear and the work fits one session | Do it now: `ship` carries it to a merge-ready pull request |
+| Nothing: the intent is clear, the facts can be found while working, and no decision or plan is missing | Do it now: `ship` carries it to a merge-ready pull request |
 | Facts too large to find along the way | `research` |
 | Decisions only you can make | `design-interview`: a design discussion, or a PRD then a TDD |
-| Only a plan for work in several phases | `structure-outline` |
+| Only a plan, for parts that depend on each other or must be proved in order | `structure-outline` |
 | An approved outline | `implement-outline`, one continuous run |
 | A committed change | `describe-pr`, then `babysit-pr` until reviewers clear it |
 
