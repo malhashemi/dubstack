@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/malhashemi/dubstack/compare/v0.3.0...v0.3.1) (2026-11-15)
+
+
+### Bug Fixes
+
+* route to ship by what the goal lacks, not by its size ([#9](https://github.com/malhashemi/dubstack/issues/9)) ([ec41b46](https://github.com/malhashemi/dubstack/commit/ec41b469881d22be63e4c22191887b72da7b21e4))
+
 ## [0.3.0](https://github.com/malhashemi/dubstack/compare/v0.2.2...v0.3.0) (2026-11-13)
 
 
