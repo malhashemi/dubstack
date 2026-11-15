@@ -39,11 +39,11 @@ The summaries below orient. Each skill's own instructions govern what it does, w
 
 | The goal still lacks | Next stage | Then |
 |---|---|---|
-| Nothing: the intent is clear and the work fits one session | Do it now, through `ship` in the same session | Done once merged |
+| Nothing: the intent is clear, the facts can be found while working, and no decision or plan is missing | Do it now, through `ship` in the same session | Done once merged |
 | Facts too large to find along the way | `research` | Choose again |
 | Decisions where product and technical choices are entangled | `design-interview`, design discussion | Structure outline |
 | An open product framing, or product and technical design large enough to settle separately | `design-interview`, PRD, then TDD | Structure outline |
-| Only a plan: nothing left to decide, but several phases | `structure-outline` | Implementation |
+| Only a plan: nothing left to decide, but parts that depend on each other or must be proved in order | `structure-outline` | Implementation |
 | An approved outline | `implement-outline` | Pull request |
 | A committed change | `describe-pr`, then `babysit-pr` | Done once merged |
 

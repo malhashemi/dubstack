@@ -7,7 +7,7 @@ description: Clarify a goal, choose its next step, and maintain its record and p
 
 Start with what the user wants, from a precise one-line change to a loose set of ideas. Identify what stands between that goal and working code, then choose the next step. For work that spans sessions, maintain the goal's record and page as each stage finishes so the user can see its progress and next steps.
 
-Choose the route by what remains unresolved, not by the goal's size: the user's intent, missing facts, or decisions that require the user. Use the "Do it now" route when the work is ready for the current session; otherwise, select the stages needed to resolve those gaps.
+Choose the route by what remains unresolved, not by the goal's size: the user's intent, missing facts, or decisions that require the user. Use the "Do it now" route when nothing remains unresolved, however large the work; otherwise, select the stages needed to resolve those gaps.
 
 ## Taking in a goal
 
@@ -29,12 +29,12 @@ Choose from the stages below by what the goal still lacks, explain the choice in
 
 | Step | Skill | Choose it when | Then |
 |---|---|---|---|
-| Do it now | `ship`, in the session that chose it | the intent is clear, the facts can be found while working, nothing is left for the user to decide, and the work fits one session | Done once merged |
+| Do it now | `ship`, in the session that chose it | the goal lacks nothing: the intent is clear, the facts can be found while working, nothing is left for the user to decide, and the work needs no plan agreed before building | Done once merged |
 | Research | `research` | the next decision waits on facts too large to find along the way, or on facts best found without the goal steering them | Choose again |
 | Design discussion | `design-interview`, design discussion profile | decisions remain for the user, and the product and technical choices are entangled in one piece of work | Structure outline |
 | PRD | `design-interview`, PRD profile | the product framing itself is open, or the product and technical design are large enough to settle separately | TDD |
 | TDD | `design-interview`, TDD profile | a PRD has been approved | Structure outline |
-| Structure outline | `structure-outline` | a design has been approved, or nothing is left for the user to decide but the work needs several phases | Implementation, once the user approves the outline |
+| Structure outline | `structure-outline` | a design has been approved, or nothing is left for the user to decide but the work needs a plan before building, because its parts depend on each other or must be proved in order | Implementation, once the user approves the outline |
 | Implementation | `implement-outline` | an outline has been approved | Pull request |
 | Pull request | `describe-pr`, then `babysit-pr` | the change is committed on its branch | Done once merged |
 | Split | the session that chose it | the goal is really several goals, or too large and unclear to design in one stage | Take in each part as its own goal |

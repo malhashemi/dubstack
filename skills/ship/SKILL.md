@@ -36,7 +36,7 @@ While checks or reviews are pending, wait the way `babysit-pr` waits. Ending you
 
 ## The change
 
-Open your work by stating, from the conversation, the change and what done looks like. The user reads it later in the report, so do not wait for an answer. When the conversation leaves a decision that only the user can make, facts too large to find while working, or more work than one session holds, this is the wrong route: stop before building, say what is unsettled, and recommend `basecamp`.
+Open your work by stating, from the conversation, the change and what done looks like. The user reads it later in the report, so do not wait for an answer. When the conversation leaves a decision that only the user can make, facts too large to find while working, or work that needs a plan agreed before building, this is the wrong route: stop before building, say what is unsettled, and recommend `basecamp`.
 
 Deliver what the conversation settled with the smallest change that does it: fix the case that happened, not every case that could. Work the conversation did not ask for goes in the report as a follow-up. Changes the conversation already made in the working tree are the starting state; leave unrelated local changes alone. Read the repository's instructions, and work on a branch named by its conventions when you start on the default branch.
 
