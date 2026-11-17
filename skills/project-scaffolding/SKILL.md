@@ -45,13 +45,13 @@ Replacing a tool keeps the coverage the old one gave: each rule that still appli
 - a test runner with a first test through a public interface, and browser or device tests where the project wants them;
 - secret scanning;
 - automated dependency updates and vulnerability scanning;
-- CI that runs the full check on every pull request.
+- CI that selects checks by the changed behaviour and affected dependencies: documentation runs formatting and checks that consume it; isolated changes run focused checks; shared or protected changes receive the broader coverage their risk requires. Put costly coverage whose delay is acceptable on a deliberate schedule or release gate.
 
 Git or agent hooks are a decision for the user.
 
-**Proof.** A passing check alone does not establish enforcement. Each check passes, fails on a deliberate violation of what it claims to enforce, and passes again once the violation is reverted. A setup failure does not count. Use disposable changes or fixtures, including synthetic scanner test data, and retain the commands and results as verification evidence. CI runs exactly the local full command and passes on the pull request's final commit.
+**Proof.** A passing check alone does not establish enforcement. Show that new or changed checks pass and reject a representative violation of what they claim to enforce; reuse applicable evidence for unchanged checks. A setup failure does not count. Use disposable changes or fixtures, including synthetic scanner test data, and retain the commands and results as verification evidence. CI uses the same task definitions as local verification and passes the checks selected for the pull request's final commit.
 
-**Discoverability.** The project itself shows how to verify a change. It has one full command, which CI runs, and a fast one where that helps, both defined in the project's manifest or task runner with names that say what they do. No command's name misleads, such as a `check` that rewrites files. The project's `AGENTS.md` gains a line only for what the code cannot show and an agent would get wrong, such as a test suite outside the full command that needs Docker or a simulator. Style rules stay out of it; the checks enforce them.
+**Discoverability.** The project itself shows how to verify a change. It has one full command and focused commands for CI's selected checks, defined in the project's manifest or task runner with names that say what they do. No command's name misleads, such as a `check` that rewrites files. The project's `AGENTS.md` gains a line only for what the code cannot show and an agent would get wrong, such as a test suite outside the full command that needs Docker or a simulator. Style rules stay out of it; the checks enforce them.
 
 **Conduct.**
 

@@ -42,12 +42,14 @@ Deliver what the conversation settled with the smallest change that does it: fix
 
 ## Proof
 
-Proof is evidence you observed yourself in this session: a command's output, a reproduction, a screenshot. Use the most direct proof each change allows:
+Choose automated checks from the changed behaviour, affected callers, and consequences of failure. Use the least costly checks that establish the result. Reuse recorded check results while the code, requirements, and environment they depend on still hold; recheck what this change could invalidate. For UI changes, run the changed experience and capture before-and-after screenshots or a short video showing what changed.
 
-- Reproduce the original failure, make the change, and watch the same reproduction pass.
-- Run the checks the repository's CI runs.
-- Add one focused test that fails without the change when the behaviour has none and the repository has a test setup.
-- For anything users see or do, run it and look. Passing tests against mocks do not show that the experience works.
+- Reproduce an observed failure and confirm the change resolves it.
+- Run focused checks for the affected behaviour and the repository's required checks for this change.
+- Add or extend an automated test when meaningful behaviour lacks adequate protection, at the cheapest level that catches the failure. Check what existing tests already cover.
+- For anything users see or do, run it and look. For prose and visual-only changes, inspection and checks of affected consumers may be sufficient; a new test needs a meaningful behavioural risk to justify it.
+
+Do not create dummy changes or pull requests solely to obtain evidence. When the user's accepted risk permits a measurement to wait, collect it from the next genuine change and report it as pending.
 
 While you verify a change users can see or do, record a demo of it for the pull request: before and after screenshots, a short video, or a terminal transcript. Keep demos in the `demos/` folder of the goal's directory when the request names one, and otherwise outside the repository's tracked files.
 
@@ -55,7 +57,7 @@ A change you cannot find a way to prove is a question for the user, not a claim.
 
 ## Review
 
-Get the independent review your standing guidance on models and review calls for, on the final diff, before the pull request. Weigh each finding against the code and what the conversation settled: fix it with the smallest change, reject it with evidence, or set it aside as a follow-up. Prove each fix, and have what a fix changed reviewed again.
+Get the independent review your standing guidance on models and review calls for, on the final diff, before the pull request. Weigh each finding against the code and what the conversation settled: fix it with the smallest change, reject it with evidence, or set it aside as a follow-up. Recheck what each fix could invalidate, and seek further review when its scope or risk warrants it.
 
 ## The pull request
 
@@ -87,7 +89,7 @@ Decide everything else yourself with sensible defaults and list those decisions 
 
 The run is complete when:
 
-- Every change in the final diff has proof observed in this session, and the review's findings are each fixed, rejected with evidence, or set aside in the report.
+- Applicable evidence covers the final diff, and the review's findings are each fixed, rejected with evidence, or set aside in the report.
 - The pull request's head is the branch's latest commit and its description matches that revision.
 - The pull request is ready to merge, or the report says exactly what it waits on.
 - It is open and not set to merge without the user.
