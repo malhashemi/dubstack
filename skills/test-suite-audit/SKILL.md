@@ -21,7 +21,7 @@ Work on a branch of its own from the repository's base, unless the user names on
 
 ## Map the suite
 
-Build a lean map: languages and frameworks; counts of unit, integration, end-to-end, contract, and snapshot tests by module and type, stating collection limits where counts are unavailable; the CI jobs with their matrix, runner sizes, triggers, caches, and retries; and how much Git and CI history is available. Measure at the finest practical grain, a test case before a file and a file before a job.
+Start with existing CI history and job selection: irrelevant jobs, repeated verification, setup, and the slowest tests. Identify the largest avoidable cost, then map the tests, dependencies, triggers, and runner sizes needed to evaluate it. Inspect individual cases where that could change the decision; a complete suite inventory is not a prerequisite for a targeted improvement.
 
 ## Gather the evidence
 
@@ -29,7 +29,7 @@ Scale the effort to the suite and the access you have. Disclose every run, histo
 
 **Cost.** Take runtimes from machine-readable reporters. Look back over CI history, normally 30 to 90 days as available. Separate setup, install, build, and download time from test execution. Aggregate billed cost from the provider's actual prices and plan rules, weighted by runner size, and keep runner minutes, wall-clock time, and money actually saved distinct. Label every number measured, estimated with its basis, or unavailable. Never invent a rate or present local timings as CI timings. A sum of baseline durations is not a saving when parallelism, fixed setup, per-minute rounding, or included allowances decide what is paid or waited for.
 
-**Flakiness.** In CI, find commits where the same test failed and then passed, including manual reruns and retries that the reporter hides. Locally, run the suite at least three times before changing anything, in random order where the runner supports it, with extra runs for suspects. Classify each flake's cause: timing, order, shared state, network, an external service, or a driver. Tell infrastructure noise apart from real regressions. Three passes do not prove a test is stable.
+**Flakiness.** In CI, find commits where the same test failed and then passed, including manual reruns and retries that the reporter hides. Use repeated local runs when needed to establish a suspected flake or compare a runtime change, targeting the affected tests under comparable conditions. Classify each flake's cause: timing, order, shared state, network, an external service, or a driver. Tell infrastructure noise apart from real regressions. Three passes do not prove a test is stable.
 
 **History.** Trace each retained CI failure to what fixed it. A product fix with the test unchanged supports a real catch. A test-only change suggests noise, but it may be a changed specification or the repair of an assertion that passed when it should have failed, so read the context. A pass on rerun with nothing changed suggests a flake. Missing or unresolved history is unknown. Co-changes with bug fixes support a test's value; repeated edits during refactors that changed no behavior suggest coupling to implementation. Short history weakens any "never failed" claim.
 
@@ -37,12 +37,14 @@ Scale the effort to the suite and the access you have. Disclose every run, histo
 
 **Static hints.** Tests that restate types or schemas, check mock interactions rather than outcomes, import private internals, assert snapshots or exact text, or assert nothing beyond not throwing are worth a closer look. Some of these are legitimate contracts.
 
-## Prove it before removing
+## Establish what would be lost
 
-Deliberate breakage is the gate for every deletion or merge. Introduce focused faults in the behavior the candidate is meant to guard, then record whether the candidate catches each fault and whether the remaining cheaper tests catch it. Count a surviving test as overlap only when it runs in the same required lane, on the same triggers and required checks. Break a sample of the ordinary candidates and every candidate in a protected area, and make sure each test you actually delete has a demonstrated absence of any relevant gap.
+Before removing, merging, or moving a test, identify the meaningful behavior and failures it protects and what would cover them afterward. Use the cheapest conclusive evidence: existing failure history, duplicate assertions with equivalent setup, a guarantee fully enforced by another required check, or focused deliberate breakage where protection is uncertain. A confirmed obsolete requirement or an assertion that only restates implementation needs no replacement test; explain why it protects no required behavior.
+
+Protected-area candidates still need their own reason and breakage result. Count another test as replacement only where its triggers and timing provide the required protection. Equivalent code coverage alone is not enough.
 
 - Only the candidate catches a meaningful fault: keep it.
-- Neither catches it: close the high-signal gap first, or keep the candidate.
+- Neither catches it: report the gap and repair it when in scope; keeping an ineffective test is not protection.
 - The survivors catch what the candidate catches: the candidate can go, on this evidence.
 
 Interpret the results honestly. A surviving mutant may be a real gap or an equivalent mutant; an invalid mutant proves nothing. Sampling never proves full equivalence.
@@ -61,7 +63,7 @@ Cost outside test bodies, such as caching, triggers, the matrix, runner size, an
 - Move a valuable but expensive test to a nightly or pre-release lane only when that feedback delay is acceptable, the lane really runs, and required critical protection stays on the required path.
 - Fix flaky tests whose cause you established; leave undiagnosed ones reported, not guessed at.
 - Clean up fixtures, helpers, mocks, and configuration left dead by the changes, keeping whatever remaining tests use.
-- Get green honestly: no skips, commented-out tests, weakened assertions, added retries, or lowered thresholds.
+- Get green by fixing the cause or making an evidence-backed change to what the test should protect. Do not hide unexplained failures with skips, retries, or weaker assertions. Changing required behavior or the user's accepted risk needs their decision.
 - Add a test only where breakage revealed a meaningful uncovered gap, and list each addition with its reason.
 - Leave product behavior as it is.
 
@@ -69,7 +71,7 @@ Commit in coherent groups by area rather than as one mixed change.
 
 ## Verify
 
-Run the full suite and checks the repository expects. Repeat the local runs in a way comparable to the baseline, with the same run count and ordering. Confirm no deliberate fault remains. Report before-and-after measurements apart from projections.
+Run checks appropriate to what changed and the repository's required gates. Repeat timing or flake measurements where the change needs that evidence, under conditions comparable to the baseline. Confirm no deliberate fault remains. Report before-and-after measurements apart from projections.
 
 ## The pull request
 
