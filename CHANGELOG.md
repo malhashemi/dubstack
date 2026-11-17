@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.2](https://github.com/malhashemi/dubstack/compare/v0.3.1...v0.3.2) (2026-11-17)
+
+
+### Bug Fixes
+
+* scale verification to meaningful risk and cost ([#11](https://github.com/malhashemi/dubstack/issues/11)) ([e5c3ddd](https://github.com/malhashemi/dubstack/commit/e5c3dddc1bcf00a22ad0dcbff384062ff995ce96))
+
 ## [0.3.1](https://github.com/malhashemi/dubstack/compare/v0.3.0...v0.3.1) (2026-11-15)
 
 
