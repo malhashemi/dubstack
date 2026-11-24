@@ -41,6 +41,7 @@ The summaries below orient. Each skill's own instructions govern what it does, w
 |---|---|---|
 | Nothing: the intent is clear, the facts can be found while working, and no decision or plan is missing | Do it now, through `ship` in the same session | Done once merged |
 | Facts too large to find along the way | `research` | Choose again |
+| A clickable experience people can walk through before deciding or approving | `prototype` | Choose again |
 | Decisions where product and technical choices are entangled | `design-interview`, design discussion | Structure outline |
 | An open product framing, or product and technical design large enough to settle separately | `design-interview`, PRD, then TDD | Structure outline |
 | Only a plan: nothing left to decide, but parts that depend on each other or must be proved in order | `structure-outline` | Implementation |
@@ -60,6 +61,7 @@ Each stage ends by naming its output for the next stage, and the user returns to
 ## Anywhere
 
 - **`research`** answers questions without a goal.
+- **`prototype`** builds a clickable prototype without a goal, such as after requirements gathering.
 - **`ship`** takes work a conversation settled to a merge-ready pull request, and merges only when asked.
 - **`babysit-pr`** carries any pull request through CI and review, including a bot's.
 - **`modernize`** brings an aging pull request up to date, after judging whether it should be rebased, reworked, or closed.
@@ -69,6 +71,6 @@ Each stage ends by naming its output for the next stage, and the user returns to
 
 ## What needs Dossier
 
-The stages that keep records and pages in the project's tree need Dossier: `project-home`, `basecamp`, `research`, `design-interview`, `conversational-interview`, `structure-outline`, `implement-outline`, `architecture-review`, and `project-scaffolding`, which runs as a goal. [Dossier setup](dossier-setup.md) walks through access to an existing deployment or hosting one.
+The stages that keep records and pages in the project's tree need Dossier: `project-home`, `basecamp`, `research`, `prototype`, `design-interview`, `conversational-interview`, `structure-outline`, `implement-outline`, `architecture-review`, and `project-scaffolding`, which runs as a goal. [Dossier setup](dossier-setup.md) walks through access to an existing deployment or hosting one.
 
 These work without it: `orchestration-setup`, `stack-preferences`, `upstream-source`, `test-suite-audit`, `ship`, `describe-pr` (its description and walkthrough stay local), `babysit-pr`, `modernize`, `brand-skill-generator` (its interview runs from a temporary folder), `visualize-html` (local pages), `svg-design`, and `skill-writing`.

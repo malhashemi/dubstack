@@ -11,7 +11,7 @@ Once the user approves it, the outline is the most recent plan: where it differs
 
 ## Inputs and authority
 
-Before reading the goal's artifacts, sync the project's local copy using its `AGENTS.md` commands. Read in full the frozen design ledger (a design discussion's, or a TDD's with the PRD ledger behind it), the approved mockups and state demos beside it, the goal record, the research, and the code the design touches. The research-questions document stays out. Take up the design's deferred questions for the outline first. A phase that builds a surface the design approved as a mockup or state demo names that file as the target it must match.
+Before reading the goal's artifacts, sync the project's local copy using its `AGENTS.md` commands. Read in full the frozen design ledger (a design discussion's, or a TDD's with the PRD ledger behind it), the approved mockups, state demos, and any prototype screens its entries name, the goal record, the research, and the code the design touches. The research-questions document stays out. Take up the design's deferred questions for the outline first. A phase that builds a surface the design approved as a mockup, state demo, or prototype screen names that file as the target it must match.
 
 Read `glossary/glossary.json` in the local copy. Use the current terms and this goal's proposals; a proposal takes precedence over the current entry with the same `id`.
 

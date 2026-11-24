@@ -8,6 +8,8 @@ A PRD establishes **what** to build and **why**, for the people who will use it:
 
 Inputs are whatever exists: a goal record, research, or a few sentences from the user. Cite them as settled sources. When a design discussion moved to this route, its frozen ledger is an input too, and its product entries arrive as settled context with their IDs. When the product context is thin, surface the gap as a question and let the user fill it; a requirement nobody stated is a question, never a settled entry. Research the product as it stands when a question needs that fact.
 
+When a prototype exists, whether built before this interview or shown after it completed, read it as an input too. A prototype is a proposal, never a settled source. Where it shows something the ledger does not hold, or contradicts an entry, surface that as a frontier question showing both and let the user say which holds. Only what the prototype shows counts: what it leaves out (rules, failures, who is not allowed, constraints, rollout) contradicts nothing and stays as the ledger has it. When a prototype came first, confirm its framing at the foundation gate like any other input, and confirm its overall approach as the solution's opening decision rather than treating either as settled.
+
 Write the problem and the solution from the user's side, in what they see and do. File paths and function names belong to the TDD. The names on a **surface** (commands, flags, fields, messages) are product decisions, so the PRD settles them exactly. When a technical question comes up, record it as a deferred question for the TDD with the context that raised it, and keep the round in product space.
 
 ## Foundation first, then the solution
@@ -28,7 +30,7 @@ The interview has two phases. **Foundation** settles the framing, the actors, to
 
 The solution opens with the overall approach. Its losing options become the paths not taken, and the detail questions follow from the approach chosen.
 
-- **Flows and surfaces.** For every flow the approach adds or changes, settle each surface an actor meets, drawn as a mockup.
+- **Flows and surfaces.** For every flow the approach adds or changes, settle each surface an actor meets, drawn as a mockup. A surface the user confirms as a prototype shows it needs no separate mockup: the settled entry names the prototype's screen where it lives in the prototype's folder as its artifact, rather than copying it beside the ledger like an approved mockup, since the prototype's session may still revise it.
 - **Behaviours.** A behaviour is one observable outcome with an ID that the outline, the implementation checks, and review cite. For every flow and actor, cover four situations: the main path, nothing there yet, something fails, and the actor is not allowed. One shared behaviour may cover a situation for every flow, such as "every failure keeps the text the actor typed", or record that a situation does not apply; only exceptions get their own. Where the wording matters, quote the exact message.
 - **Constraints.** Rules that hold everywhere and that no single behaviour shows: privacy and compliance, supported platforms, accessibility level, and limits the business sets, each with its source. An expectation an actor can observe, such as "a comment appears to others within two seconds", is a behaviour.
 - **Rollout.** When the product has existing users or data, settle who gets the change first, what happens to what users already have, and how the success signal is read during the rollout.
@@ -50,7 +52,7 @@ Foundation:
 
 Solution:
 - The overall approach, with its paths not taken.
-- Every flow the approach adds or changes, with a mockup of each surface an actor meets.
+- Every flow the approach adds or changes, with a mockup or confirmed prototype screen for each surface an actor meets.
 - For every flow and actor, behaviours for the main path, nothing there yet, a failure, and not allowed.
 - Every rule that holds everywhere, as a constraint with its source.
 - A rollout, when the product has existing users or data.
@@ -71,7 +73,7 @@ A frontier that emptied because few questions were asked does not meet this. The
 
 ## Ledger
 
-Settled entries carry `phase=foundation|solution` and one of these groups: `product` (cited context), `framing`, `today`, `signal`, `assumptions`, `approach`, `flows`, `rollout`. Frontier questions carry the same `phase`, and product option questions carry `compare-on`. Actors are Language terms. Use the Behaviours and Constraints lists from [ledger format](ledger-format.md). Attach the exact artifact to entries whose substance is a shape: an approved mockup or state demo file, an exact message, or a command's or API's exact form.
+Settled entries carry `phase=foundation|solution` and one of these groups: `product` (cited context), `framing`, `today`, `signal`, `assumptions`, `approach`, `flows`, `rollout`. Frontier questions carry the same `phase`, and product option questions carry `compare-on`. Actors are Language terms. Use the Behaviours and Constraints lists from [ledger format](ledger-format.md). Attach the exact artifact to entries whose substance is a shape: an approved mockup, state demo, or prototype screen, an exact message, or a command's or API's exact form.
 
 ## Page
 
