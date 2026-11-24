@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/malhashemi/dubstack/compare/v0.3.2...v0.4.0) (2026-11-24)
+
+
+### Features
+
+* add a prototype skill and let completed designs reopen ([#13](https://github.com/malhashemi/dubstack/issues/13)) ([0131e03](https://github.com/malhashemi/dubstack/commit/0131e03a99f48f4d550a830ad72513cfc80d44c7))
+
 ## [0.3.2](https://github.com/malhashemi/dubstack/compare/v0.3.1...v0.3.2) (2026-11-17)
 
 
