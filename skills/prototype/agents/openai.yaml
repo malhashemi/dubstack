@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prototype"
+  short_description: "Build and revise a clickable prototype of an experience on Dossier"
+  default_prompt: "Use $prototype to build a clickable prototype of this experience, publish it on Dossier so people can walk through it and comment, and revise it as feedback arrives."

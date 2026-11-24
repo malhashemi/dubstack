@@ -140,3 +140,9 @@ Then hand off:
 - Write the glossary changes into the project's `glossary/glossary.json`, following [glossary guidance](references/glossary.md), unless the profile leaves the glossary unchanged. Later stages read them there.
 - Append every entry marked `found` to the research artifact named in the ledger's `inputs`, under one heading for findings made during design, each with its source. When the inputs name no research artifact, the frozen ledger alone carries them.
 - Publish the local copy, then report where everything is, with links to the published pages, and any check you could not run. If Dossier cannot be reached, finish with the local files and report that they are unpublished.
+
+<important if="reopening a completed interview after new input arrives">
+Freezing closes the interview rather than locking the ledger permanently. When new input arrives after completion (a prototype people reacted to, a changed requirement, or a finding from a later stage), continue from the existing ledger at the next round number, keeping IDs stable. Put each discrepancy between the new input and the ledger on the frontier as a question showing both, then fold answers in and revise the page by the rules above.
+
+Complete the reopened interview by its profile's rules, applying its gates and final confirmation to what changed while earlier confirmations on unchanged entries stand, then freeze and publish the ledger again. Because the delta is rewritten each round, name in the handoff every ID changed since the earlier completion so stages that already read the earlier ledger know what to revisit.
+</important>

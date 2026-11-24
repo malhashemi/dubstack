@@ -25,12 +25,13 @@ Requests given together stay one goal unless they are really separate goals; the
 
 ## Choosing the next step
 
-Choose from the stages below by what the goal still lacks, explain the choice in a sentence, and let the user override it. The route is chosen after intake and again after research. The other stages have a fixed next step, which you change only when what a stage found calls for a different route.
+Choose from the stages below by what the goal still lacks, explain the choice in a sentence, and let the user override it. The route is chosen after intake, after research, and after a prototype. The other stages have a fixed next step, except where noted below or when what a stage found calls for a different route.
 
 | Step | Skill | Choose it when | Then |
 |---|---|---|---|
 | Do it now | `ship`, in the session that chose it | the goal lacks nothing: the intent is clear, the facts can be found while working, nothing is left for the user to decide, and the work needs no plan agreed before building | Done once merged |
 | Research | `research` | the next decision waits on facts too large to find along the way, or on facts best found without the goal steering them | Choose again |
+| Prototype | `prototype` | someone must see and use the experience before deciding or approving, and the goal changes a flow a person walks through across screens or steps | Choose again |
 | Design discussion | `design-interview`, design discussion profile | decisions remain for the user, and the product and technical choices are entangled in one piece of work | Structure outline |
 | PRD | `design-interview`, PRD profile | the product framing itself is open, or the product and technical design are large enough to settle separately | TDD |
 | TDD | `design-interview`, TDD profile | a PRD has been approved | Structure outline |
@@ -38,6 +39,10 @@ Choose from the stages below by what the goal still lacks, explain the choice in
 | Implementation | `implement-outline` | an outline has been approved | Pull request |
 | Pull request | `describe-pr`, then `babysit-pr` | the change is committed on its branch | Done once merged |
 | Split | the session that chose it | the goal is really several goals, or too large and unclear to design in one stage | Take in each part as its own goal |
+
+After a completed PRD or design discussion, the next step is the user's choice between a prototype, when one applies, and the stage the table names; recommend one and let the user decide. After a prototype that followed a completed design, choose between reopening that design and moving to its next stage; the user says whether what people saw changed what the design holds.
+
+A completed stage is not locked. Requirements can change at any point, so a completed design may be reopened. When the reopened design finishes, route the goal back through each stage that already read its earlier version, in order, for the entries that changed.
 
 A new kind of stage joins the route as a row here: what it is, its skill, when it is the right next step, and what follows it.
 
@@ -61,7 +66,7 @@ For other goals, read [the goal record](references/goal-record.md) and write `GO
 
 A completed stage returns the path to its goal record. Synchronize the local copy, then read the record and the stage's artifacts. Update the record to reflect the result:
 
-- Add the stage, its artifacts, and its outcome to Stages.
+- Add the stage, its artifacts, and its outcome to Stages; record a reopened stage as a new entry rather than overwriting the earlier one.
 - Remove resolved items from Open and add newly raised questions.
 - Update the front matter and Waiting on the user.
 

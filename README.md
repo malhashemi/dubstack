@@ -48,7 +48,7 @@ When a decision needs you, the agent builds a page with the options side by side
 
 ## Install
 
-Dubstack is one plugin with 22 skills. Install it one way per agent, because the plugin and the standalone skills together give you every skill twice.
+Dubstack is one plugin with 23 skills. Install it one way per agent, because the plugin and the standalone skills together give you every skill twice.
 
 <details>
 <summary><strong>Claude Code</strong></summary>
@@ -132,6 +132,7 @@ Every goal starts at `basecamp`. It chooses the route by what remains unresolved
 |---|---|
 | Nothing: the intent is clear, the facts can be found while working, and no decision or plan is missing | Do it now: `ship` carries it to a merge-ready pull request |
 | Facts too large to find along the way | `research` |
+| A clickable experience people can walk through before deciding or approving | `prototype` |
 | Decisions only you can make | `design-interview`: a design discussion, or a PRD then a TDD |
 | Only a plan, for parts that depend on each other or must be proved in order | `structure-outline` |
 | An approved outline | `implement-outline`, one continuous run |
@@ -193,6 +194,7 @@ Every stage hands back to basecamp, which records it on the goal's page and writ
 |---|---|
 | [`basecamp`](skills/basecamp/SKILL.md) | Takes in a goal, chooses its next stage, and keeps its record and page current |
 | [`research`](skills/research/SKILL.md) | Finds out how things are, with every finding sourced and dated |
+| [`prototype`](skills/prototype/SKILL.md) | Builds and revises a clickable prototype on Dossier so people can walk through an experience before deciding or approving |
 | [`structure-outline`](skills/structure-outline/SKILL.md) | Turns an approved design into phases of outcomes, contracts, and checks |
 | [`implement-outline`](skills/implement-outline/SKILL.md) | Builds an approved outline in one verified, reviewed run |
 | [`describe-pr`](skills/describe-pr/SKILL.md) | Opens the pull request with demos attached and a walkthrough for larger changes |

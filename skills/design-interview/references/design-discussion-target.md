@@ -8,6 +8,8 @@ A design discussion settles, for one piece of work and in one interview, **what*
 
 Inputs are the goal record and the research, cited as settled sources. The research-questions document shaped the research and stays out; the design reads the findings. When the product context is thin, surface the gap as a frontier question; a requirement nobody stated is a question, never a settled entry.
 
+When a prototype exists, whether built before this interview or shown after it completed, read it as an input too. A prototype is a proposal, never a settled source. Where it shows something the ledger does not hold, or contradicts an entry, surface that as a frontier question showing both and let the user say which holds. Only what the prototype shows counts: what it leaves out (rules, failures, who is not allowed, constraints, rollout) contradicts nothing and stays as the ledger has it.
+
 Every design question is the user's to decide, or to hand to you explicitly. When the research makes a choice look obvious, put it on the frontier with a strong recommendation; only the inputs, the codebase as it stands, the user, or the user's explicit delegation settle an entry.
 
 Write today's experience and the desired end state from the user's side, in what they see and do. File paths, functions, and code belong to the code sketches, contracts, and patterns. The names on a **surface** (commands, flags, fields, messages) are product decisions, so the design settles them exactly. Keep evidence, inference, and proposal apart: today's state cites the research that found it, and a proposal reads as a decision, never as a fact about the code.
@@ -32,7 +34,7 @@ When the frontier is empty and the coverage below is met, ask the user to read t
 
 ## The design
 
-- **Flows and surfaces.** For every flow the change adds or changes, settle each surface an actor meets, drawn as a mockup.
+- **Flows and surfaces.** For every flow the change adds or changes, settle each surface an actor meets, drawn as a mockup. A surface the user confirms as a prototype shows it needs no separate mockup: the settled entry names the prototype's screen where it lives in the prototype's folder as its artifact, rather than copying it beside the ledger like an approved mockup, since the prototype's session may still revise it.
 - **Behaviours.** A behaviour is one observable outcome with an ID that the outline, the implementation checks, and the PR review cite. For every flow and actor, cover four situations: the main path, nothing there yet, something fails, and the actor is not allowed. One shared behaviour may cover a situation for every flow, such as "every failure keeps the text the actor typed", or record that a situation does not apply; only exceptions get their own. Where the wording matters, quote the exact message.
 - **Constraints.** Rules that hold everywhere and that no single behaviour shows: privacy and compliance, supported platforms, accessibility level, and limits the business sets, each with its source. An expectation an actor can observe is a behaviour.
 - **Rollout.** When the product has existing users or data, settle who gets the change first, what happens to what users already have, and how the success signal is read during the rollout.
@@ -57,7 +59,7 @@ Product:
 
 Design:
 - The overall approach, with its paths not taken.
-- Every flow the change adds or changes, with a mockup of each surface an actor meets.
+- Every flow the change adds or changes, with a mockup or confirmed prototype screen for each surface an actor meets.
 - For every flow and actor, behaviours for the main path, nothing there yet, a failure, and not allowed.
 - Every rule that holds everywhere, as a constraint with its source.
 - A rollout, when the product has existing users or data.
@@ -81,7 +83,7 @@ A frontier that emptied because few questions were asked does not meet this. The
 
 ## Ledger
 
-Settled entries carry `phase=design` and one of these groups: `product` (cited context), `summary`, `today`, `end-state`, `signal`, `approach`, `flows`, `rollout`, `sketches`, `contracts`, `tests`, `patterns`. Actors are Language terms. Product option questions and seam questions carry `compare-on`. Use the Behaviours and Constraints lists from [ledger format](ledger-format.md). Attach the exact artifact to entries whose substance is a shape: an approved mockup or state demo file, an exact message, a code sketch, a contract, or a pattern's snippets with their file location.
+Settled entries carry `phase=design` and one of these groups: `product` (cited context), `summary`, `today`, `end-state`, `signal`, `approach`, `flows`, `rollout`, `sketches`, `contracts`, `tests`, `patterns`. Actors are Language terms. Product option questions and seam questions carry `compare-on`. Use the Behaviours and Constraints lists from [ledger format](ledger-format.md). Attach the exact artifact to entries whose substance is a shape: an approved mockup, state demo, or prototype screen, an exact message, a code sketch, a contract, or a pattern's snippets with their file location.
 
 ## Page
 
