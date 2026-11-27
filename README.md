@@ -84,6 +84,17 @@ In VS Code, run **Chat: Install Plugin From Source** and enter `https://github.c
 </details>
 
 <details>
+<summary><strong>Antigravity</strong></summary>
+
+```sh
+agy plugin install https://github.com/malhashemi/dubstack
+```
+
+Skills appear with the plugin's prefix, such as `dubstack:basecamp`, and the plugin updates when a new release changes its version.
+
+</details>
+
+<details>
 <summary><strong>Cursor, OpenCode, Gemini CLI, and other agents</strong></summary>
 
 ```sh
