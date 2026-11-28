@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/malhashemi/dubstack/compare/v0.4.0...v0.5.0) (2026-11-28)
+
+
+### Features
+
+* add a refine skill for review sessions on a running app ([#16](https://github.com/malhashemi/dubstack/issues/16)) ([8dc3ea2](https://github.com/malhashemi/dubstack/commit/8dc3ea2d7041f7668b520658bfccfe48294302b4))
+
 ## [0.4.0](https://github.com/malhashemi/dubstack/compare/v0.3.2...v0.4.0) (2026-11-24)
 
 
