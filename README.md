@@ -111,7 +111,7 @@ The [skills CLI](https://github.com/vercel-labs/skills) asks which agents to ins
 - The GitHub CLI, signed in, for issues and pull requests.
 - Python 3 for the bundled scripts, and [uv](https://docs.astral.sh/uv/) for the brand toolkit.
 
-Some skills work without Dossier: `orchestration-setup`, `stack-preferences`, `upstream-source`, `test-suite-audit`, `ship`, `describe-pr`, `babysit-pr`, `modernize`, `brand-skill-generator`, `visualize-html`, `svg-design`, and `skill-writing`.
+Some skills work without Dossier: `orchestration-setup`, `stack-preferences`, `upstream-source`, `test-suite-audit`, `ship`, `refine`, `describe-pr`, `babysit-pr`, `modernize`, `brand-skill-generator`, `visualize-html`, `svg-design`, and `skill-writing`.
 
 ## Start here
 
@@ -211,6 +211,7 @@ Every stage hands back to basecamp, which records it on the goal's page and writ
 | [`describe-pr`](skills/describe-pr/SKILL.md) | Opens the pull request with demos attached and a walkthrough for larger changes |
 | [`babysit-pr`](skills/babysit-pr/SKILL.md) | Carries a pull request through CI and review until it is cleared to merge |
 | [`ship`](skills/ship/SKILL.md) | Takes work a conversation settled to a proven, reviewed, merge-ready pull request in one unattended run |
+| [`refine`](skills/refine/SKILL.md) | Runs a review session on the running app, fixing and testing each request locally, with design choices you pick and copy back, then one pull request |
 | [`modernize`](skills/modernize/SKILL.md) | Brings an aging pull request up to date, after judging whether to rebase, rework, or close it |
 
 **Craft**
