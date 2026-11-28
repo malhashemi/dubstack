@@ -1,0 +1,4 @@
+interface:
+  display_name: "Refine"
+  short_description: "Review a running app item by item, fixing and testing each change locally before one pull request"
+  default_prompt: "Use $refine to run a refinement session on this app: I'll review it and send requests, questions, and design choices one at a time, and we'll open one pull request when everything is addressed."
